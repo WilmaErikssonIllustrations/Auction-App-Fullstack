@@ -1,7 +1,16 @@
-import express from "express";
+import express, { json } from "express";
+import cors from "cors";
+import { config } from "dotenv";
+
+config();
+const port = process.env.PORT || 3000;
 
 const app = express();
+app.use(cors());
+app.use(json);
 
-app.listen(3000, () => {
-  console.log("Api running on port 3000");
+app.listen(port, () => {
+  try {
+    console.log("Api running on port", port);
+  } catch (error) {}
 });
