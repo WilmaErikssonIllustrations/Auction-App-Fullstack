@@ -5,15 +5,17 @@ export const auctionRouter = express.Router();
 
 auctionRouter.post("/", async (req, res) => {
   try {
-    const { title, description, image, bids, startingBid } = req.body;
+    const { title, description, image, bids, startingBid, endDate, createdBy } =
+      req.body;
 
     const response = await createAuction({
+      createdBy: createdBy,
       title: title,
       description: description,
       image: image,
       bids: bids,
       startingBid: startingBid,
-      hasEnded: false,
+      endDate: endDate,
     });
 
     if (response) {
