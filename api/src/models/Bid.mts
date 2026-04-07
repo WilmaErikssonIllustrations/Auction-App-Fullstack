@@ -1,9 +1,9 @@
 import { Schema } from "mongoose";
 
-// export type Bid = {
-//   createdBy: string; //user id from mongo
-//   sum: number;
-// };
+export type Bid = {
+  createdBy: string; //user id from mongo
+  sum: number;
+};
 
 export const bidSchema = new Schema(
   {

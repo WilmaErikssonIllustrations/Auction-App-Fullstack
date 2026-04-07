@@ -4,6 +4,7 @@ import { config } from "dotenv";
 import mongoose from "mongoose";
 import { createServer } from "node:http";
 import { makeConnection } from "./sockets/socket.mjs";
+import { auctionRouter } from "./routes/auctionRouter.mjs";
 
 config();
 const port = process.env.PORT || 3000;
@@ -12,7 +13,9 @@ if (!MONGO_URI) throw new Error("No connection string found");
 
 export const app = express();
 app.use(cors());
-app.use(json);
+app.use(json());
+
+app.use("/auctions", auctionRouter);
 
 export const server = createServer(app);
 
