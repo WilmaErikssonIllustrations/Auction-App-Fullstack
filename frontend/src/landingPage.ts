@@ -4,12 +4,7 @@ const displayFormButton = document.getElementById("displayFormButton");
 const createAuctionForm = document.getElementById("createAuctionForm");
 
 displayFormButton?.addEventListener("click", () => {
-  createAuctionForm?.classList.toggle("hide");
-  if (displayFormButton.innerText === "Ny auktion") {
-    displayFormButton.innerText = "Dölj";
-  } else {
-    displayFormButton.innerText = "Ny auktion";
-  }
+  toggleAuctionForm();
 });
 
 createAuctionForm?.addEventListener("submit", async (e) => {
@@ -42,7 +37,18 @@ createAuctionForm?.addEventListener("submit", async (e) => {
 
   if (response.ok) {
     console.log("SUCCESS:", await response.json());
+    createAuctionForm?.classList.toggle("hide");
   } else {
     console.log("ERROR", response);
   }
 });
+
+function toggleAuctionForm() {
+  if (!displayFormButton) return;
+  createAuctionForm?.classList.toggle("hide");
+  if (createAuctionForm?.classList.contains("hide")) {
+    displayFormButton.innerText = "Ny auktion";
+  } else {
+    displayFormButton.innerText = "Dölj";
+  }
+}
