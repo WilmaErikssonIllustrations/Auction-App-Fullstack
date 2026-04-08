@@ -8,7 +8,7 @@ export type Auction = {
   description: string;
   image: string;
   bids: Bid[];
-  endDate: string;
+  endDate: number;
   startingBid: number;
   createdBy: string;
   id: string;
@@ -19,7 +19,7 @@ export type NewAuctionFormData = {
   description: string;
   image: string;
   bids: Bid[];
-  endDate: number;
+  daysToEnd: number;
   startingBid: number;
   createdBy: string;
 };

@@ -9,8 +9,18 @@ export const auctionRouter = express.Router();
  */
 auctionRouter.post("/", async (req, res) => {
   try {
-    const { title, description, image, bids, startingBid, endDate, createdBy } =
-      req.body;
+    const {
+      title,
+      description,
+      image,
+      bids,
+      startingBid,
+      daysToEnd,
+      createdBy,
+    } = req.body;
+
+    // Datum i ms som är idag + daysToEnd
+    const endDate = Date.now() + 1000 * 60 * 60 * 24 * +daysToEnd;
 
     const response = await createAuction({
       createdBy: createdBy,

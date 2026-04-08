@@ -6,7 +6,7 @@ export type Auction = {
   description: string;
   image: string;
   bids: Bid[];
-  endDate: string;
+  endDate: number;
   startingBid: number;
   createdBy: string;
 };
@@ -18,7 +18,7 @@ const auctionSchema = new Schema(
     description: { type: String, required: true },
     image: { type: String, required: true },
     bids: { type: [bidSchema], required: true },
-    endDate: { type: String, required: true },
+    endDate: { type: Number, required: true },
     startingBid: { type: Number, required: true },
     createdBy: { type: String, required: true },
   },
