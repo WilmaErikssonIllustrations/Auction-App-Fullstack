@@ -31,3 +31,9 @@ button {
 .hide {
   display: none !important;
 }
+
+/* Auction Feed */
+.auction {
+  padding: 5px;
+  border: 2px dotted blue;
+}

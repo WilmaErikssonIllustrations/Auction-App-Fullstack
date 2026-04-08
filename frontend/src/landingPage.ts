@@ -1,5 +1,6 @@
-import type { NewAuctionFormData } from "./models/types";
+import type { Auction, NewAuctionFormData } from "./models/types";
 
+// Create Auction Form
 const displayFormButton = document.getElementById("displayFormButton");
 const createAuctionForm = document.getElementById("createAuctionForm");
 
@@ -52,3 +53,55 @@ function toggleAuctionForm() {
     displayFormButton.innerText = "Dölj";
   }
 }
+
+// Auction Feed
+export const createAuctionFeed = (auctions: Auction[]) => {
+  const auctionContainer = document.getElementById("auctionContainer");
+  if (!auctionContainer) return;
+
+  auctions.forEach((auction) => {
+    const auctionElement = createAuction(auction);
+    auctionContainer.append(auctionElement);
+  });
+};
+
+const createAuction = (auction: Auction) => {
+  const container = document.createElement("div");
+  const title = document.createElement("h4");
+  const image = document.createElement("span");
+  const description = document.createElement("p");
+  const highestBidSum = document.createElement("p");
+  const highestBidLeader = document.createElement("p");
+  const createdBy = document.createElement("p");
+  const endDate = document.createElement("p");
+
+  title.innerHTML = "Rubrik: " + auction.title;
+  image.innerHTML = "Bild-url: " + auction.image;
+  description.innerHTML = "Beskrivning: " + auction.description;
+  createdBy.innerHTML = "Säljs av: " + auction.createdBy;
+  endDate.innerHTML = "Auktionen slutar: " + auction.endDate;
+
+  container.className = "auction";
+
+  if (auction.bids.length > 0) {
+    const sortedBids = auction.bids.sort((a, b) => {
+      if (a.sum > b.sum) return 1;
+      if (a.sum < b.sum) return -1;
+      return 0;
+    });
+    highestBidSum.innerHTML = "Högsta bud: " + sortedBids[0].sum.toString();
+    highestBidLeader.innerHTML = "Leder auktionen: " + sortedBids[0].createdBy;
+  }
+
+  container.append(
+    title,
+    description,
+    image,
+    highestBidLeader,
+    highestBidSum,
+    endDate,
+    createdBy,
+  );
+
+  return container;
+};
