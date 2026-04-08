@@ -3,6 +3,15 @@ import type { NewAuctionFormData } from "./models/types";
 const displayFormButton = document.getElementById("displayFormButton");
 const createAuctionForm = document.getElementById("createAuctionForm");
 
+displayFormButton?.addEventListener("click", () => {
+  createAuctionForm?.classList.toggle("hide");
+  if (displayFormButton.innerText === "Ny auktion") {
+    displayFormButton.innerText = "Dölj";
+  } else {
+    displayFormButton.innerText = "Ny auktion";
+  }
+});
+
 createAuctionForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const titleInput = document.getElementById("title") as HTMLInputElement;
