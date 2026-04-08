@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import { server } from "../index.mjs";
+import { Server as HttpServer } from "node:http";
 import { getAuctions } from "../controllers/auctionController.mjs";
 
 /**
@@ -7,8 +7,13 @@ import { getAuctions } from "../controllers/auctionController.mjs";
  * tests connection in "sendTest" and "receiveTest"
  * emits auctions in "sendAuctions"
  */
-export const makeConnection = () => {
-  const io = new Server(server, { cors: { origin: "*" } });
+export const makeConnection = (httpServer: HttpServer) => {
+  // Use the httpServer passed in as an argument
+  const io = new Server(httpServer, {
+    cors: {
+      origin: "http://localhost:5173" // Better than "*" for security
+    }
+  });
 
   io.on("connection", async (socket) => {
     console.log("user connected");

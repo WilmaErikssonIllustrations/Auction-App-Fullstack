@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { createServer } from "node:http";
 import { makeConnection } from "./sockets/socket.mjs";
 import { auctionRouter } from "./routes/auctionRouter.mjs";
+import { loginRouter } from "./routes/loginRouter.mjs";
 
 config();
 const port = process.env.PORT || 3000;
@@ -12,14 +13,21 @@ const MONGO_URI = process.env.MONGO_URI || "";
 if (!MONGO_URI) throw new Error("No connection string found");
 
 export const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 app.use(json());
 
 // API ENDPOINTS //
 app.use("/auctions", auctionRouter);
 
+app.use("/login", loginRouter);
+
 // CREATE AND START SOCKET SERVER //
 export const server = createServer(app);
+
+makeConnection(server);
 
 server.listen(port, async () => {
   try {
@@ -28,8 +36,5 @@ server.listen(port, async () => {
   } catch (error) {
     console.error("Error connection to database: ", error);
   }
-  console.log("Socket server running on port", port);
+  console.log(`Server listening on http://localhost:${port}`);
 });
-
-// this function listens for user connections
-makeConnection();
