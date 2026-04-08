@@ -1,0 +1,25 @@
+export type Bid = {
+  createdBy: string;
+  sum: number;
+};
+
+export type Auction = {
+  title: string;
+  description: string;
+  image: string;
+  bids: Bid[];
+  endDate: string;
+  startingBid: number;
+  createdBy: string;
+  id: string;
+};
+
+export type NewAuctionFormData = {
+  title: string;
+  description: string;
+  image: string;
+  bids: Bid[];
+  endDate: number;
+  startingBid: number;
+  createdBy: string;
+};
