@@ -3,17 +3,23 @@ import { createAuction } from "../controllers/auctionController.mjs";
 
 export const auctionRouter = express.Router();
 
+/**
+ * takes the formData from the user and sends to createAuction
+ * sends the created Auction as a response
+ */
 auctionRouter.post("/", async (req, res) => {
   try {
-    const { title, description, image, bids, startingBid } = req.body;
+    const { title, description, image, bids, startingBid, endDate, createdBy } =
+      req.body;
 
     const response = await createAuction({
+      createdBy: createdBy,
       title: title,
       description: description,
       image: image,
       bids: bids,
       startingBid: startingBid,
-      hasEnded: false,
+      endDate: endDate,
     });
 
     if (response) {

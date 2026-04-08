@@ -15,8 +15,10 @@ export const app = express();
 app.use(cors());
 app.use(json());
 
+// API ENDPOINTS //
 app.use("/auctions", auctionRouter);
 
+// CREATE AND START SOCKET SERVER //
 export const server = createServer(app);
 
 server.listen(port, async () => {
