@@ -1,5 +1,8 @@
 import express from "express";
 import bcrypt from "bcrypt";
+import { createUser, findUserByEmail } from "../controllers/userController.mjs";
+
+
 
 export const userRouter = express.Router();
 
