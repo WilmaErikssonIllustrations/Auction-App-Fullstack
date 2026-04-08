@@ -1,6 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import { createUser, findUserByEmail } from "../controllers/userController.mjs";
+import { convertUserToDTO } from "../models/User.mjs";
 
 
 
@@ -23,7 +24,7 @@ userRouter.post("/register", async (req, res) => {
 
         const newUser = await createUser(name, email, hashedPassword);
 
-        res.status(201).json({ message: "Användare registrerad framgångsrikt", user: newUser });
+        res.status(201).json({ message: "Användare registrerad framgångsrikt", user: convertUserToDTO(newUser) });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Ett fel inträffade vid registrering av användare" });
