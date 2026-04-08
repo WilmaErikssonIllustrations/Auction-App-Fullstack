@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { createServer } from "node:http";
 import { makeConnection } from "./sockets/socket.mjs";
 import { auctionRouter } from "./routes/auctionRouter.mjs";
+import { userRouter } from "./routes/userRouter.mjs";
 
 config();
 const port = process.env.PORT || 3000;
@@ -17,6 +18,7 @@ app.use(json());
 
 // API ENDPOINTS //
 app.use("/auctions", auctionRouter);
+app.use("/api/users", userRouter);
 
 // CREATE AND START SOCKET SERVER //
 export const server = createServer(app);
