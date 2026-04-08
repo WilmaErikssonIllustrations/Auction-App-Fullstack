@@ -1,4 +1,5 @@
 import { io } from "socket.io-client";
+import { createAuctionFeed } from "./landingPage";
 
 // CREATE SOCKET-CLIENT SERVER
 const socket = io("http://localhost:3000");
@@ -14,7 +15,5 @@ socket.emit("receiveTest", "testing from frontend");
 // ändra datatyp
 // ändra loopen till att presentera html
 socket.on("sendAuctions", (auctions: []) => {
-  auctions.forEach((auction) => {
-    console.log("this is auction:", auction);
-  });
+  createAuctionFeed(auctions);
 });
