@@ -18,7 +18,7 @@ createAuctionForm?.addEventListener("submit", async (e) => {
   const startingBidInput = document.getElementById(
     "startingBid",
   ) as HTMLInputElement;
-  const endDateInput = document.getElementById("endDate") as HTMLInputElement;
+  const daysToEnd = document.getElementById("daysToEnd") as HTMLInputElement;
 
   const newAuction: NewAuctionFormData = {
     title: titleInput.value,
@@ -26,7 +26,7 @@ createAuctionForm?.addEventListener("submit", async (e) => {
     image: imageInput.value,
     startingBid: +startingBidInput.value,
     bids: [],
-    endDate: +endDateInput.value,
+    daysToEnd: +daysToEnd.value,
     createdBy: "random users name",
   };
 
@@ -79,7 +79,10 @@ const createAuction = (auction: Auction) => {
   image.innerHTML = "Bild-url: " + auction.image;
   description.innerHTML = "Beskrivning: " + auction.description;
   createdBy.innerHTML = "Säljs av: " + auction.createdBy;
-  endDate.innerHTML = "Auktionen slutar: " + auction.endDate;
+
+  const calculatedEndDate = new Date(auction.endDate).toLocaleString("se-SV");
+
+  endDate.innerHTML = "Auktionen slutar: " + calculatedEndDate;
 
   container.className = "auction";
 
