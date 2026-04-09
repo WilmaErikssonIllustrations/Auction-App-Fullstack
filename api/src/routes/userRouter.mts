@@ -1,11 +1,35 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import { createUser, findUserByEmail } from "../controllers/userController.mjs";
-import { convertUserToDTO } from "../models/User.mjs";
+import { convertUserToDTO, type UserDTO } from "../models/User.mjs";
+import jwt from "jsonwebtoken";
 
 
 
 export const userRouter = express.Router();
+
+userRouter.get("/me", async (req, res) => {
+    try {
+        const token = req.cookies.login;
+
+        if (!token) {
+            return res.status(401).json({ message: "No authentication token found" });
+        }
+
+        const decoded = jwt.verify(token, "supersecretsecret") as UserDTO;
+
+        const user = await findUserByEmail(decoded.email);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ name: user.name, email: user.email });
+    } catch (error) {
+        console.error("Error in /me endpoint:", error);
+        res.status(401).json({ message: "Invalid or expired token" });
+    }
+});
 
 userRouter.post("/register", async (req, res) => {
     try {
@@ -30,4 +54,4 @@ userRouter.post("/register", async (req, res) => {
         res.status(500).json({ message: "Ett fel inträffade vid registrering av användare" });
     }
 });
-    
+

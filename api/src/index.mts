@@ -8,6 +8,7 @@ import { userRouter } from "./routes/userRouter.mjs";
 import { loginRouter } from "./routes/loginRouter.mjs";
 import { getAuctions } from "./controllers/auctionController.mjs";
 import { Server } from "socket.io";
+import cookieParser from "cookie-parser";
 
 config();
 const port = process.env.PORT || 3000;
@@ -22,6 +23,7 @@ app.use(
   }),
 );
 app.use(json());
+app.use(cookieParser());
 
 // API ENDPOINTS //
 app.use("/auctions", auctionRouter);
