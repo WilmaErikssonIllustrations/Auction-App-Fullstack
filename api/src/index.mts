@@ -6,7 +6,10 @@ import { createServer } from "node:http";
 import { auctionRouter } from "./routes/auctionRouter.mjs";
 import { userRouter } from "./routes/userRouter.mjs";
 import { loginRouter } from "./routes/loginRouter.mjs";
-import { getAuctions } from "./controllers/auctionController.mjs";
+import {
+  getAuctionById,
+  getAuctions,
+} from "./controllers/auctionController.mjs";
 import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 
@@ -28,7 +31,6 @@ app.use(cookieParser());
 // API ENDPOINTS //
 app.use("/auctions", auctionRouter);
 app.use("/api/users", userRouter);
-
 app.use("/login", loginRouter);
 
 // CREATE AND START SOCKET SERVER //
@@ -43,6 +45,11 @@ export const io = new Server(server, {
 io.on("connection", async (socket) => {
   console.log("user connected");
 
+  // Ta emot id för auktionen
+  socket.on("sendId", async (id: string) => {
+    // skicka tillbaka auktions objektet för att bygga produktsidan med
+    socket.emit("sendSingleAuction", await getAuctionById(id));
+  });
   socket.emit("sendAuctions", await getAuctions());
 });
 
