@@ -1,4 +1,5 @@
 import { AuctionModel, type Auction } from "../models/Auction.mjs";
+import type { Bid } from "../models/Bid.mjs";
 
 /**
  *
@@ -14,7 +15,26 @@ export const createAuction = async (auction: Auction) => {
  * @returns the first 5 auctions from the database
  */
 export const getAuctions = async () => {
-  const auctions = await AuctionModel.find();
-  const maxLimitAuctions = auctions.slice(0, 5);
-  return maxLimitAuctions;
+  return await AuctionModel.find();
+};
+
+/**
+ *
+ * @param id id of the auction
+ * @param createdBy id of the bidder
+ * @param sum sum of the bid
+ */
+export const addBid = async (id: string, createdBy: string, sum: number) => {
+  const auction = await AuctionModel.findById(id);
+  if (!auction) return false;
+
+  const newBid: Bid = {
+    createdBy: createdBy,
+    sum: sum,
+  };
+
+  auction.bids.push(newBid);
+  auction.save();
+
+  return auction;
 };

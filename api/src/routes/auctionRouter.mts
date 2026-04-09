@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addBid,
   createAuction,
   getAuctions,
 } from "../controllers/auctionController.mjs";
@@ -44,6 +45,35 @@ auctionRouter.post("/", async (req, res) => {
     }
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ message: "something went wrong", error: error });
+    res.status(500).json({
+      message: "something went wrong creating the auction",
+      error: error,
+    });
+  }
+});
+
+/**
+ * takes a bid from the user and sends to addBid
+ * sends the updatedAuction as a response
+ */
+auctionRouter.patch("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { createdBy, sum } = req.body;
+
+    const response = addBid(id, createdBy, +sum);
+
+    if (response) {
+      res.status(201).json(response);
+      // here we should update the auction object displayed
+    } else {
+      res.status(400).send("Could not update auction");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({
+      message: "something went wrong updating the auction",
+      error: error,
+    });
   }
 });
