@@ -13,7 +13,7 @@ export type Auction = {
 
 const auctionSchema = new Schema(
   {
-    id: { type: Schema.ObjectId }, //den här skulle man vilja vara required så att även id i DTO kan vara required men funkar inte när man då skapar auction
+    id: { type: Schema.ObjectId },
     title: { type: String, required: true },
     description: { type: String, required: true },
     image: { type: String, required: true },
