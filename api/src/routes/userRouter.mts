@@ -1,6 +1,10 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { createUser, findUserByEmail } from "../controllers/userController.mjs";
+import {
+  createUser,
+  findUserByEmail,
+  findUserById,
+} from "../controllers/userController.mjs";
 import { convertUserToDTO, type UserDTO } from "../models/User.mjs";
 import jwt from "jsonwebtoken";
 
@@ -57,5 +61,21 @@ userRouter.post("/register", async (req, res) => {
     res
       .status(500)
       .json({ message: "Ett fel inträffade vid registrering av användare" });
+  }
+});
+
+userRouter.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await findUserById(id);
+
+    if (user) {
+      res.status(200).json(convertUserToDTO(user));
+    } else {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something went wrong getting user");
   }
 });

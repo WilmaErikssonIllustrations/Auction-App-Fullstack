@@ -1,6 +1,7 @@
 import type { Auction, NewAuctionFormData } from "../models/types";
 import { hasAuctionEnded } from "./hasAuctionEnded";
 import { checkLoggedInUser } from "./checkLoggedInUser";
+import { getUsername } from "./getUsername";
 
 // Create Auction Form
 const displayFormButton = document.getElementById("displayFormButton");
@@ -79,8 +80,10 @@ const createAuction = async (auction: Auction) => {
   const title = document.createElement("h4");
   const image = document.createElement("span");
   const description = document.createElement("p");
+  const startingBid = document.createElement("p");
   const highestBidSum = document.createElement("p");
   const highestBidLeader = document.createElement("p");
+  const isHighestBidLeader = document.createElement("p");
   const createdBy = document.createElement("p");
   const endDate = document.createElement("p");
 
@@ -91,7 +94,12 @@ const createAuction = async (auction: Auction) => {
   if (loggedInUser?.id === auction.createdBy) {
     createdBy.innerHTML = "Det här är din auktion";
   } else {
-    createdBy.innerHTML = "Säljs av: " + auction.createdBy;
+    const auctionCreator = await getUsername(auction.createdBy);
+    if (auctionCreator) {
+      createdBy.innerHTML = "Säljs av: " + auctionCreator.name;
+    } else {
+      createdBy.innerHTML = "Säljs av användaren med ID: " + auction.createdBy;
+    }
   }
 
   const calculatedEndDate = new Date(auction.endDate).toLocaleString("se-SV");
@@ -115,15 +123,23 @@ const createAuction = async (auction: Auction) => {
     highestBidLeader.innerHTML =
       (auctionHasEnded ? "Vann" : "Leder") +
       " auktionen: " +
-      sortedBids[0].createdBy;
+      sortedBids[0].createdBy; // det här ska ändras så att det visar budgivarens användarnamn
+
+    if (loggedInUser?.id === sortedBids[0].createdBy) {
+      isHighestBidLeader.innerHTML = "Du leder budgivningen";
+    }
+  } else {
+    startingBid.innerHTML = "Utropspris: " + auction.startingBid + " kr";
   }
 
   container.append(
     title,
-    description,
     image,
+    description,
+    startingBid,
     highestBidLeader,
     highestBidSum,
+    isHighestBidLeader,
     endDate,
     createdBy,
   );
