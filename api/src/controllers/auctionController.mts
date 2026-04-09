@@ -21,8 +21,18 @@ export const getAuctions = async () => {
 /**
  *
  * @param id id of the auction
+ * @returns auction
+ */
+export const getAuctionById = async (id: string) => {
+  return await AuctionModel.findById(id);
+};
+
+/**
+ *
+ * @param id id of the auction
  * @param createdBy id of the bidder
  * @param sum sum of the bid
+ * @returns false or the auction
  */
 export const addBid = async (id: string, createdBy: string, sum: number) => {
   const auction = await AuctionModel.findById(id);
