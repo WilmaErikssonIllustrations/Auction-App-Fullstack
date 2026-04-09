@@ -7,6 +7,7 @@ import { makeConnection } from "./sockets/socket.mjs";
 import { auctionRouter } from "./routes/auctionRouter.mjs";
 import { userRouter } from "./routes/userRouter.mjs";
 import { loginRouter } from "./routes/loginRouter.mjs";
+import cookieParser from "cookie-parser";
 
 config();
 const port = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(json());
+app.use(cookieParser());
 
 // API ENDPOINTS //
 app.use("/auctions", auctionRouter);
