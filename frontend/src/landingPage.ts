@@ -1,5 +1,7 @@
 import type { Auction, NewAuctionFormData } from "./models/types";
 import { hasAuctionEnded } from "./utils/hasAuctionEnded";
+import "./socket";
+import "./header";
 
 // Create Auction Form
 const displayFormButton = document.getElementById("displayFormButton");
