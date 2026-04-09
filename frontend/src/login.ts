@@ -1,40 +1,29 @@
+import axios from "axios";
 import "./style.css";
 
-document.querySelector("#loginForm")?.addEventListener("submit", async (e) => {
+document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const emailInput = document.querySelector("#email") as HTMLInputElement | null;
-    const passwordInput = document.querySelector("#password") as HTMLInputElement | null;
+    const userEmail = (document.getElementById("userEmail") as HTMLInputElement)
+        .value;
+    const userPassword = (
+        document.getElementById("userPassword") as HTMLInputElement
+    ).value;
 
-    if (!emailInput || !passwordInput) {
-        console.error("Form inputs not found");
-        return;
-    }
+    const response = await axios.post(
+        // "https://fed25s-chat-cbgzhhgncrhjesg8.swedencentral-01.azurewebsites.net/login",
+        "http://localhost:3000/login",
+        {
+            email: userEmail,
+            password: userPassword,
+        },
+        {
+            withCredentials: true,
+        },
+    );
 
-    const email = emailInput.value;
-    const password = passwordInput.value;
-
-    try {
-        const response = await fetch("http://localhost:3000/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password }),
-            credentials: "include",
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            console.log("Login successful:", data);
-
-            window.location.href = "/";
-        } else {
-            const errorData = await response.json();
-            alert(`Login failed: ${errorData.message || "Invalid credentials"}`);
-        }
-    } catch (error) {
-        console.error("Network error:", error);
-        alert("Could not connect to the server.");
+    if (response.status >= 200 && response.status < 300) {
+        sessionStorage.setItem("me", response.data.name);
+        location.href = "/";
     }
 });
