@@ -1,5 +1,9 @@
 import express from "express";
-import { createAuction } from "../controllers/auctionController.mjs";
+import {
+  createAuction,
+  getAuctions,
+} from "../controllers/auctionController.mjs";
+import { io } from "../index.mjs";
 
 export const auctionRouter = express.Router();
 
@@ -34,6 +38,7 @@ auctionRouter.post("/", async (req, res) => {
 
     if (response) {
       res.status(201).json(response);
+      io.emit("sendAuctions", await getAuctions());
     } else {
       res.status(400).send("Could not create auction");
     }

@@ -3,10 +3,11 @@ import cors from "cors";
 import { config } from "dotenv";
 import mongoose from "mongoose";
 import { createServer } from "node:http";
-import { makeConnection } from "./sockets/socket.mjs";
 import { auctionRouter } from "./routes/auctionRouter.mjs";
 import { userRouter } from "./routes/userRouter.mjs";
 import { loginRouter } from "./routes/loginRouter.mjs";
+import { getAuctions } from "./controllers/auctionController.mjs";
+import { Server } from "socket.io";
 
 config();
 const port = process.env.PORT || 3000;
@@ -14,10 +15,12 @@ const MONGO_URI = process.env.MONGO_URI || "";
 if (!MONGO_URI) throw new Error("No connection string found");
 
 export const app = express();
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(json());
 
 // API ENDPOINTS //
@@ -29,7 +32,17 @@ app.use("/login", loginRouter);
 // CREATE AND START SOCKET SERVER //
 export const server = createServer(app);
 
-makeConnection(server);
+export const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173", // Better than "*" for security
+  },
+});
+
+io.on("connection", async (socket) => {
+  console.log("user connected");
+
+  socket.emit("sendAuctions", await getAuctions());
+});
 
 server.listen(port, async () => {
   try {

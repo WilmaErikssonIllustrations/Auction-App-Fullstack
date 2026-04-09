@@ -59,6 +59,7 @@ function toggleAuctionForm() {
 export const createAuctionFeed = (auctions: Auction[]) => {
   const auctionContainer = document.getElementById("auctionContainer");
   if (!auctionContainer) return;
+  auctionContainer.innerHTML = "";
 
   auctions.forEach((auction) => {
     const auctionElement = createAuction(auction);
