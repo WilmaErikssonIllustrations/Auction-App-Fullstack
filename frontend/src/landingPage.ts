@@ -1,4 +1,5 @@
 import type { Auction, NewAuctionFormData } from "./models/types";
+import { hasAuctionEnded } from "./utils/hasAuctionEnded";
 
 // Create Auction Form
 const displayFormButton = document.getElementById("displayFormButton");
@@ -82,7 +83,13 @@ const createAuction = (auction: Auction) => {
 
   const calculatedEndDate = new Date(auction.endDate).toLocaleString("se-SV");
 
-  endDate.innerHTML = "Auktionen slutar: " + calculatedEndDate;
+  const auctionHasEnded = hasAuctionEnded(auction.endDate);
+
+  if (auctionHasEnded) {
+    endDate.innerHTML = "Auktionen slutfördes: " + calculatedEndDate;
+  } else {
+    endDate.innerHTML = "Auktionen slutar: " + calculatedEndDate;
+  }
 
   container.className = "auction";
 
@@ -93,7 +100,10 @@ const createAuction = (auction: Auction) => {
       return 0;
     });
     highestBidSum.innerHTML = "Högsta bud: " + sortedBids[0].sum.toString();
-    highestBidLeader.innerHTML = "Leder auktionen: " + sortedBids[0].createdBy;
+    highestBidLeader.innerHTML =
+      (auctionHasEnded ? "Vann" : "Leder") +
+      " auktionen: " +
+      sortedBids[0].createdBy;
   }
 
   container.append(
