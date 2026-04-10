@@ -39,9 +39,10 @@ const displayAuctionDetails = (auction: Auction) => {
     bidForm.append(bidInput, submitButton);
     bidForm.addEventListener("submit", async (event) => { 
         event.preventDefault();
-        // Här behövs det läggas in logik för att hantera budgivning
+        // Här behövs det läggas in fetch
     });
 
     container.append(title, description, image, highestBidSum, bidForm);
     auctionContainer.appendChild(container);
 }
+
