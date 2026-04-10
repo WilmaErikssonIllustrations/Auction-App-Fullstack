@@ -1,7 +1,6 @@
 import type { Auction, NewAuctionFormData } from "../models/types";
 import { hasAuctionEnded } from "./hasAuctionEnded";
-import { checkLoggedInUser } from "./checkLoggedInUser";
-import { getUsername } from "./getUsername";
+import { getUser } from "./getUser";
 
 // Create Auction Form
 const displayFormButton = document.getElementById("displayFormButton");
@@ -13,7 +12,7 @@ displayFormButton?.addEventListener("click", () => {
 
 createAuctionForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const loggedInUser = await checkLoggedInUser();
+  const loggedInUser = await getUser();
   if (!loggedInUser) return;
   console.log("loggedin user:", loggedInUser);
 
@@ -75,7 +74,7 @@ export const createAuctionFeed = (auctions: Auction[]) => {
 
 const createAuction = async (auction: Auction) => {
   console.log(auction);
-  const loggedInUser = await checkLoggedInUser();
+  const loggedInUser = await getUser();
 
   const container = document.createElement("div");
   const title = document.createElement("h4");
@@ -100,7 +99,7 @@ const createAuction = async (auction: Auction) => {
   if (loggedInUser?.id === auction.createdBy) {
     createdBy.innerHTML = "Det här är din auktion";
   } else {
-    const auctionCreator = await getUsername(auction.createdBy);
+    const auctionCreator = await getUser(auction.createdBy);
     if (auctionCreator) {
       createdBy.innerHTML = "Säljs av: " + auctionCreator.name;
     } else {
