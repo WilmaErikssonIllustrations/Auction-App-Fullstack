@@ -8,5 +8,6 @@ const socket = io("http://localhost:3000");
 socket.emit("sendId", localStorage.getItem("lastClickedAuction"));
 
 socket.on("sendSingleAuction", (auction: Auction) => {
+  console.log("updating product page");
   displayAuctionDetails(auction);
 });

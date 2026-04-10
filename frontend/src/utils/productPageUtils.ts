@@ -5,7 +5,11 @@ const auctionContainer = document.getElementById("auctionContainer");
 
 export const displayAuctionDetails = (auction: Auction) => {
   console.log("inside displayAuction");
+  console.log("new auction:", auction);
+
   if (!auctionContainer) return;
+
+  auctionContainer.innerHTML = "";
 
   const container = document.createElement("div");
   const title = document.createElement("h4");
@@ -19,10 +23,12 @@ export const displayAuctionDetails = (auction: Auction) => {
 
   if (auction.bids.length > 0) {
     const sortedBids = auction.bids.sort((a, b) => {
-      if (a.sum > b.sum) return 1;
-      if (a.sum < b.sum) return -1;
+      if (a.sum < b.sum) return 1;
+      if (a.sum > b.sum) return -1;
       return 0;
     });
+    console.log("sortedBids", sortedBids);
+
     highestBidSum.textContent = "Högsta bud: " + sortedBids[0].sum.toString();
   }
 
@@ -43,17 +49,17 @@ export const displayAuctionDetails = (auction: Auction) => {
     const bidInputValue = bidInput.value;
     const user = await checkLoggedInUser();
     if (user) {
-    const response = await fetch("http://localhost:3000/auctions/" + auction._id, {
+      console.log("user", user);
+      await fetch("http://localhost:3000/auctions/" + auction._id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           createdBy: user.id,
-          sum: bidInputValue
+          sum: bidInputValue,
         }),
-      }})
-
-      console.log("Bid response:", response);
+      });
     }
   });
 

@@ -2,6 +2,7 @@ import express from "express";
 import {
   addBid,
   createAuction,
+  getAuctionById,
   getAuctions,
 } from "../controllers/auctionController.mjs";
 import { io } from "../index.mjs";
@@ -61,11 +62,13 @@ auctionRouter.patch("/:id", async (req, res) => {
     const { id } = req.params;
     const { createdBy, sum } = req.body;
 
-    const response = addBid(id, createdBy, +sum);
+    console.log(id, createdBy, sum);
+
+    const response = await addBid(id, createdBy, +sum);
 
     if (response) {
       res.status(201).json(response);
-      // here we should update the auction object displayed
+      io.emit("sendSingleAuction", await getAuctionById(id));
     } else {
       res.status(400).send("Could not update auction");
     }

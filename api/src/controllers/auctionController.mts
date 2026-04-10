@@ -44,7 +44,7 @@ export const addBid = async (id: string, createdBy: string, sum: number) => {
   };
 
   auction.bids.push(newBid);
-  auction.save();
+  await auction.save();
 
   return auction;
 };
