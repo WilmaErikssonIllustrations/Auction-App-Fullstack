@@ -1,7 +1,7 @@
 import mongoose, { Schema, type InferSchemaType } from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  _id: { type: Schema.ObjectId },
+  // id: { type: Schema.ObjectId },
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -20,12 +20,14 @@ export type UserDTO = {
   id: string | undefined;
 };
 
-export type UserFromDB = InferSchemaType<typeof userSchema>;
+export type UserFromDB = InferSchemaType<typeof userSchema> & {
+  id: string | undefined;
+};
 
 // Ändra User till UserFromDB och lägg till id när schema och model är skapat
 export const convertUserToDTO = (user: UserFromDB): UserDTO => {
   return {
-    id: user._id?.toString(),
+    id: user.id?.toString(),
     name: user.name,
     email: user.email,
   };
