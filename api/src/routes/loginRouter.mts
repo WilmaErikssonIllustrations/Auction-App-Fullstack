@@ -33,3 +33,8 @@ loginRouter.post("/", async (req, res) => {
         res.status(500).json(JSON.stringify(error));
     }
 });
+
+loginRouter.post("/logout", (req, res) => {
+    res.clearCookie("login");
+    res.status(200).send("Utloggad");
+});
