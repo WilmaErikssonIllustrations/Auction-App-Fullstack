@@ -74,6 +74,7 @@ export const createAuctionFeed = (auctions: Auction[]) => {
 };
 
 const createAuction = async (auction: Auction) => {
+  console.log(auction);
   const loggedInUser = await checkLoggedInUser();
 
   const container = document.createElement("div");
@@ -86,6 +87,11 @@ const createAuction = async (auction: Auction) => {
   const isHighestBidLeader = document.createElement("p");
   const createdBy = document.createElement("p");
   const endDate = document.createElement("p");
+
+  title.addEventListener("click", () => {
+    localStorage.setItem("lastClickedAuction", auction._id);
+    window.location.href = "/productPage";
+  });
 
   title.innerHTML = "Rubrik: " + auction.title;
   image.innerHTML = "Bild-url: " + auction.image;

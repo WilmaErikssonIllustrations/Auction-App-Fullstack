@@ -11,7 +11,7 @@ export type Auction = {
   endDate: number;
   startingBid: number;
   createdBy: string;
-  id: string;
+  _id: string;
 };
 
 export type NewAuctionFormData = {
