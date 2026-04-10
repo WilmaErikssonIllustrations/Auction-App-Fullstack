@@ -1,5 +1,5 @@
 import type { Auction } from "../models/types";
-import { checkLoggedInUser } from "./checkLoggedInUser";
+import { getUser } from "./getUser";
 
 const auctionContainer = document.getElementById("auctionContainer");
 
@@ -47,7 +47,7 @@ export const displayAuctionDetails = (auction: Auction) => {
   bidForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const bidInputValue = bidInput.value;
-    const user = await checkLoggedInUser();
+    const user = await getUser();
     if (user) {
       console.log("user", user);
       await fetch("http://localhost:3000/auctions/" + auction._id, {
