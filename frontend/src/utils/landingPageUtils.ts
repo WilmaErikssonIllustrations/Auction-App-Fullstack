@@ -120,8 +120,8 @@ const createAuction = async (auction: Auction) => {
 
   if (auction.bids.length > 0) {
     const sortedBids = auction.bids.sort((a, b) => {
-      if (a.sum > b.sum) return 1;
-      if (a.sum < b.sum) return -1;
+      if (a.sum < b.sum) return 1;
+      if (a.sum > b.sum) return -1;
       return 0;
     });
     highestBidSum.innerHTML = "Högsta bud: " + sortedBids[0].sum.toString();
