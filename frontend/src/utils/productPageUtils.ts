@@ -63,6 +63,13 @@ export const displayAuctionDetails = (auction: Auction) => {
     }
   });
 
-  container.append(title, description, image, highestBidSum, bidForm);
+  const goBackButton = document.createElement("button");
+  goBackButton.textContent = "Gå tillbaka";
+  goBackButton.addEventListener("click", () => {
+    window.history.back();
+  });
+
+  container.append(title, description, image, highestBidSum, bidForm, goBackButton);
   auctionContainer.appendChild(container);
 };
+
