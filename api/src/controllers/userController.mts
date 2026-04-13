@@ -1,4 +1,3 @@
-//console.log("hello");
 import { User } from "../models/User.mjs";
 
 export const createUser = async (

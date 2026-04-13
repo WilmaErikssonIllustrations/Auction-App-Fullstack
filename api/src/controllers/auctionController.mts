@@ -22,7 +22,7 @@ export const getAuctions = async () => {
   auctions.forEach(async (auction) => {
     auction.hasEnded = checkHasEnded(auction);
     const result = addWinner(auction);
-    if (result) {
+    if (auction.hasEnded && result) {
       auction.winner = result;
     }
     await auction.save();
