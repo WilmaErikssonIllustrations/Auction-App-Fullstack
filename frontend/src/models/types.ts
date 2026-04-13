@@ -9,6 +9,7 @@ export type Auction = {
   image: string;
   bids: Bid[];
   endDate: number;
+  hasEnded: boolean;
   startingBid: number;
   createdBy: string;
   _id: string;

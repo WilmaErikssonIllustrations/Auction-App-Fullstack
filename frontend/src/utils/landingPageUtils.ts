@@ -1,5 +1,4 @@
 import type { Auction, NewAuctionFormData } from "../models/types";
-import { hasAuctionEnded } from "./hasAuctionEnded";
 import { getUser } from "./getUser";
 
 // Create Auction Form
@@ -108,9 +107,8 @@ const createAuction = async (auction: Auction) => {
   }
 
   const calculatedEndDate = new Date(auction.endDate).toLocaleString("se-SV");
-  const auctionHasEnded = hasAuctionEnded(auction.endDate);
 
-  if (auctionHasEnded) {
+  if (auction.hasEnded) {
     endDate.innerHTML = "Auktionen slutfördes: " + calculatedEndDate;
   } else {
     endDate.innerHTML = "Auktionen slutar: " + calculatedEndDate;
@@ -126,7 +124,7 @@ const createAuction = async (auction: Auction) => {
     });
     highestBidSum.innerHTML = "Högsta bud: " + sortedBids[0].sum.toString();
     highestBidLeader.innerHTML =
-      (auctionHasEnded ? "Vann" : "Leder") +
+      (auction.hasEnded ? "Vann" : "Leder") +
       " auktionen: " +
       sortedBids[0].createdBy; // det här ska ändras så att det visar budgivarens användarnamn
 

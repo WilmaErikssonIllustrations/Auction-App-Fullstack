@@ -36,6 +36,7 @@ auctionRouter.post("/", async (req, res) => {
       bids: bids,
       startingBid: startingBid,
       endDate: endDate,
+      hasEnded: false,
     });
 
     if (response) {
