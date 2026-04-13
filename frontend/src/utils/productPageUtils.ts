@@ -44,6 +44,18 @@ export const displayAuctionDetails = (auction: Auction) => {
   submitButton.textContent = "Lägg bud";
 
   bidForm.append(bidInput, submitButton);
+  bidForm.id = "bidForm";
+
+  const user = getUser();
+
+  if (!user) {
+    bidInput.disabled = true;
+    submitButton.disabled = true;
+    const loginPrompt = document.createElement("p");
+    loginPrompt.textContent = "Du måste logga in för att lägga ett bud.";
+    container.appendChild(loginPrompt);
+  }
+
   bidForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const bidInputValue = bidInput.value;
