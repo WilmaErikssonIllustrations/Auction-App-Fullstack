@@ -42,7 +42,7 @@ export const io = new Server(server, {
   },
 });
 
-io.on("connection", async (socket) => {
+io.on("connection", (socket) => {
   console.log("user connected");
 
   // Ta emot id för auktionen
@@ -50,7 +50,10 @@ io.on("connection", async (socket) => {
     // skicka tillbaka auktions objektet för att bygga produktsidan med
     socket.emit("sendSingleAuction", await getAuctionById(id));
   });
-  socket.emit("sendAuctions", await getAuctions());
+
+  socket.on("readyForAuctions", async () => {
+    socket.emit("sendAuctions", await getAuctions());
+  });
 });
 
 server.listen(port, async () => {

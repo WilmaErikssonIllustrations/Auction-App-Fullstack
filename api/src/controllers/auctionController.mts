@@ -1,5 +1,6 @@
 import { AuctionModel, type Auction } from "../models/Auction.mjs";
 import type { Bid } from "../models/Bid.mjs";
+import { checkHasEnded } from "../utils/checkHasEnded.js";
 
 /**
  *
@@ -15,7 +16,14 @@ export const createAuction = async (auction: Auction) => {
  * @returns the first 5 auctions from the database
  */
 export const getAuctions = async () => {
-  return await AuctionModel.find();
+  const auctions = await AuctionModel.find();
+
+  auctions.forEach(async (auction) => {
+    auction.hasEnded = checkHasEnded(auction);
+    await auction.save();
+  });
+
+  return auctions;
 };
 
 /**
@@ -24,7 +32,13 @@ export const getAuctions = async () => {
  * @returns auction
  */
 export const getAuctionById = async (id: string) => {
-  return await AuctionModel.findById(id);
+  const auction = await AuctionModel.findById(id);
+  if (!auction) return false;
+  auction.hasEnded = checkHasEnded(auction);
+
+  await auction.save();
+
+  return auction;
 };
 
 /**
