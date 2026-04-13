@@ -51,17 +51,9 @@ export const displayAuctionDetails = async(auction: Auction) => {
   if (!user) {
     bidInput.disabled = true;
     submitButton.disabled = true;
-
-    const loginPrompt = document.createElement("p");
-    loginPrompt.textContent = "Du måste logga in för att lägga ett bud.";
-    container.appendChild(loginPrompt);
   } else if (user.id === auction.createdBy) {
     bidInput.disabled = true;
     submitButton.disabled = true;
-
-    const ownerPrompt = document.createElement("p");
-    ownerPrompt.textContent = "Du kan inte lägga ett bud på din egen auktion.";
-    container.appendChild(ownerPrompt);
   }
 
   bidForm.addEventListener("submit", async (event) => {
