@@ -3,7 +3,10 @@ import { getUser } from "./getUser";
 
 const auctionContainer = document.getElementById("auctionContainer");
 
-export const displayAuctionDetails = (auction: Auction) => {
+export const displayAuctionDetails = async(auction: Auction) => {
+  console.log("inside displayAuction");
+  console.log("new auction:", auction);
+
   if (!auctionContainer) return;
 
   auctionContainer.innerHTML = "";
@@ -40,10 +43,22 @@ export const displayAuctionDetails = (auction: Auction) => {
   submitButton.textContent = "Lägg bud";
 
   bidForm.append(bidInput, submitButton);
+  bidForm.id = "bidForm";
+
+  const user = await getUser();
+
+  if (!user) {
+    bidInput.disabled = true;
+    submitButton.disabled = true;
+  } else if (user.id === auction.createdBy) {
+    bidInput.disabled = true;
+    submitButton.disabled = true;
+  }
+
   bidForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const bidInputValue = bidInput.value;
-    const user = await getUser();
+
     if (user) {
       console.log("user", user);
       await fetch("http://localhost:3000/auctions/" + auction._id, {
