@@ -4,9 +4,6 @@ import { getUser } from "./getUser";
 const auctionContainer = document.getElementById("auctionContainer");
 
 export const displayAuctionDetails = (auction: Auction) => {
-  console.log("inside displayAuction");
-  console.log("new auction:", auction);
-
   if (!auctionContainer) return;
 
   auctionContainer.innerHTML = "";
@@ -27,7 +24,6 @@ export const displayAuctionDetails = (auction: Auction) => {
       if (a.sum > b.sum) return -1;
       return 0;
     });
-    console.log("sortedBids", sortedBids);
 
     highestBidSum.textContent = "Högsta bud: " + sortedBids[0].sum.toString();
   }
@@ -69,7 +65,13 @@ export const displayAuctionDetails = (auction: Auction) => {
     window.history.back();
   });
 
-  container.append(title, description, image, highestBidSum, bidForm, goBackButton);
+  container.append(
+    title,
+    description,
+    image,
+    highestBidSum,
+    bidForm,
+    goBackButton,
+  );
   auctionContainer.appendChild(container);
 };
-

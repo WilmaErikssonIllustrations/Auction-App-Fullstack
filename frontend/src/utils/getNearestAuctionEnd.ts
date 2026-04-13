@@ -7,11 +7,6 @@ export const getNearestAuctionEnd = (auctions: Auction[]) => {
     (auction) => auction.hasEnded !== true,
   );
 
-  console.log("active auctions:", [...activeAuctions]);
-
   activeAuctions.sort((a, b) => a.endDate - b.endDate);
-
-  console.log("sorted auctions:", activeAuctions);
-
   return activeAuctions[0].endDate - Date.now();
 };

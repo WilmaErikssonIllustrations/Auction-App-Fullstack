@@ -13,7 +13,6 @@ createAuctionForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const loggedInUser = await getUser();
   if (!loggedInUser) return;
-  console.log("loggedin user:", loggedInUser);
 
   const titleInput = document.getElementById("title") as HTMLInputElement;
   const imageInput = document.getElementById("image") as HTMLInputElement;
@@ -72,7 +71,6 @@ export const createAuctionFeed = (auctions: Auction[]) => {
 };
 
 const createAuction = async (auction: Auction) => {
-  console.log(auction);
   const loggedInUser = await getUser();
 
   const container = document.createElement("div");

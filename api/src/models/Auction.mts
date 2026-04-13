@@ -8,7 +8,7 @@ export type Auction = {
   bids: Bid[];
   endDate: number;
   hasEnded: boolean;
-  winner: Bid;
+  winner?: Bid;
   startingBid: number;
   createdBy: string;
 };
