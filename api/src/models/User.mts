@@ -5,9 +5,13 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  auctionHasBiddedOn: {
+    type: [String],
+    default: []
+  }
 });
 
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 // export type UserType = {
 //   name: string;
@@ -18,6 +22,7 @@ export type UserDTO = {
   name: string;
   email: string;
   id: string | undefined;
+  auctionHasBiddedOn: string[];
 };
 
 export type UserFromDB = InferSchemaType<typeof userSchema> & {
@@ -30,5 +35,6 @@ export const convertUserToDTO = (user: UserFromDB): UserDTO => {
     id: user.id?.toString(),
     name: user.name,
     email: user.email,
+    auctionHasBiddedOn: user.auctionHasBiddedOn || [],
   };
 };

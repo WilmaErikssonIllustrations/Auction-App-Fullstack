@@ -24,6 +24,11 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
 
   if (response.status >= 200 && response.status < 300) {
     sessionStorage.setItem("me", response.data.name);
+    if (response.data.id) {
+      sessionStorage.setItem("userId", response.data.id);
+    } else {
+      console.error("Inget ID hittades i svaret från servern. Kontrollera din backend!");
+    }
     location.href = "/";
   }
 });
