@@ -1,6 +1,6 @@
 import mongoose, { Schema, type InferSchemaType } from "mongoose";
 
-const userSchema = new mongoose.Schema({
+export const userSchema = new mongoose.Schema({
   // id: { type: Schema.ObjectId },
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
@@ -9,10 +9,10 @@ const userSchema = new mongoose.Schema({
 
 export const User = mongoose.model("User", userSchema);
 
-// export type UserType = {
-//   name: string;
-//   email: string;
-// };
+export type UserType = {
+  name: string;
+  email: string;
+};
 
 export type UserDTO = {
   name: string;

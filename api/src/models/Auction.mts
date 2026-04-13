@@ -8,6 +8,7 @@ export type Auction = {
   bids: Bid[];
   endDate: number;
   hasEnded: boolean;
+  winner: Bid;
   startingBid: number;
   createdBy: string;
 };
@@ -21,6 +22,7 @@ const auctionSchema = new Schema(
     bids: { type: [bidSchema], required: true },
     endDate: { type: Number, required: true },
     hasEnded: { type: Boolean, required: true },
+    winner: { type: bidSchema, required: true },
     startingBid: { type: Number, required: true },
     createdBy: { type: String, required: true },
   },
@@ -28,8 +30,6 @@ const auctionSchema = new Schema(
 );
 
 export type AuctionFromDB = InferSchemaType<typeof auctionSchema>;
-// tror inte det behövs någon DTO här eftersom det inte är någon hemlig data vi skickar till frontend
-// men däremot vill man se att man har åtkomst till createdAt och updatedAt via timestamps
 
 export type AuctionDTO = Auction & { id: string | undefined };
 

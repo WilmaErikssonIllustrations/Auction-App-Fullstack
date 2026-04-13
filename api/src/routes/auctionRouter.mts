@@ -36,6 +36,7 @@ auctionRouter.post("/", async (req, res) => {
       startingBid: startingBid,
       endDate: endDate,
       hasEnded: false,
+      winner: { createdBy: "default", sum: 0 },
     });
 
     if (response) {
@@ -90,7 +91,8 @@ auctionRouter.patch("/:id", async (req: Request, res: Response) => {
     }
   } catch (error: unknown) {
     console.error("Error:", error);
-    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
 
     res.status(500).json({
       message: "Something went wrong updating the auction",

@@ -7,9 +7,9 @@ export type Bid = {
 
 export const bidSchema = new Schema(
   {
-    id: { type: Schema.ObjectId }, //id här ska kanske inte vara required, vi testar och ser
+    // id: { type: Schema.ObjectId }, //id här ska kanske inte vara required, vi testar och ser
     createdBy: { type: String, required: true },
     sum: { type: Number, required: true },
   },
-  { timestamps: true }, //timestamps ger automatiskt createdAt och updatedAt
+  // { timestamps: true }, //timestamps ger automatiskt createdAt och updatedAt
 );
