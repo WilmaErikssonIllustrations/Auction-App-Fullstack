@@ -41,7 +41,7 @@ export const getAuctionById = async (id: string) => {
   if (!auction) return false;
   auction.hasEnded = checkHasEnded(auction);
   const result = addWinner(auction);
-  if (result) {
+  if (auction.hasEnded && result) {
     auction.winner = result;
   }
 
