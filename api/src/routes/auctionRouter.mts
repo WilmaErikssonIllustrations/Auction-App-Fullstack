@@ -1,4 +1,4 @@
-import express from "express";
+import express, { type Request, type Response } from "express";
 import {
   addBid,
   createAuction,
@@ -10,8 +10,7 @@ import { io } from "../index.mjs";
 export const auctionRouter = express.Router();
 
 /**
- * takes the formData from the user and sends to createAuction
- * sends the created Auction as a response
+ * Tar emot formData från användaren och skapar en ny auktion.
  */
 auctionRouter.post("/", async (req, res) => {
   try {
@@ -56,27 +55,45 @@ auctionRouter.post("/", async (req, res) => {
 /**
  * takes a bid from the user and sends to addBid
  * sends the updatedAuction as a response
+ * innan bud läggs validerar att ägare inte är samma som budgivare, annars skickar error
  */
-auctionRouter.patch("/:id", async (req, res) => {
+auctionRouter.patch("/:id", async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const { createdBy, sum } = req.body;
+    // kastar 'req.params' för att TS ska veta att 'id' är en string
+    const { id } = req.params as { id: string };
+    const { createdBy, sum } = req.body; // 'createdBy' är budgivaren
 
-    console.log(id, createdBy, sum);
+    // Hämtar auktionen för att hitta ägaren
+    const auction = await getAuctionById(id);
 
-    const response = await addBid(id, createdBy, +sum);
+    if (!auction) {
+      return res.status(404).send("Auction not found");
+    }
+
+    // Kontrollerar att användaren inte budar på sin egen auktion
+    if (auction.createdBy.toString() === createdBy.toString()) {
+      return res.status(403).json({
+        message: "You cannot bid on your own auction.",
+      });
+    }
+
+    // Försöker lägga till budet
+    const response = await addBid(id, createdBy, Number(sum));
 
     if (response) {
       res.status(201).json(response);
+      // Skicka ut uppdateringen via Socket.io
       io.emit("sendSingleAuction", await getAuctionById(id));
     } else {
       res.status(400).send("Could not update auction");
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error:", error);
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+
     res.status(500).json({
-      message: "something went wrong updating the auction",
-      error: error,
+      message: "Something went wrong updating the auction",
+      error: errorMessage,
     });
   }
 });
