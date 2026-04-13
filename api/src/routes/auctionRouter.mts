@@ -90,7 +90,7 @@ auctionRouter.patch("/:id", async (req: Request, res: Response) => {
         // $addToSet lägger till auktionens ID i arrayen 'auctionHasBiddedOn'
         // men ENDAST om det inte redan finns där (förhindrar dubbletter).
         $addToSet: { auctionHasBiddedOn: id }
-      });
+      }, {});
       res.status(201).json(response);
       // Skicka ut uppdateringen via Socket.io
       // Vi hämtar den uppdaterade auktionen
