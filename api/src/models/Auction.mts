@@ -8,7 +8,7 @@ export type Auction = {
   bids: Bid[];
   endDate: number;
   hasEnded: boolean;
-  winner?: Bid;
+  winner?: Bid | null;
   startingBid: number;
   createdBy: string;
 };
@@ -22,20 +22,24 @@ const auctionSchema = new Schema(
     bids: { type: [bidSchema], required: true },
     endDate: { type: Number, required: true },
     hasEnded: { type: Boolean, required: true },
-    winner: { type: bidSchema, required: true },
+    winner: { type: bidSchema },
     startingBid: { type: Number, required: true },
     createdBy: { type: String, required: true },
   },
-  { timestamps: true }, //timestamps ger automatiskt createdAt och updatedAt
+  { timestamps: true },
 );
 
-export type AuctionFromDB = InferSchemaType<typeof auctionSchema>;
+// export type AuctionFromDB = InferSchemaType<typeof auctionSchema>;
 
-export type AuctionDTO = Auction & { id: string | undefined };
+// export type AuctionDTO = Auction & { id: string | undefined };
 
-export const convertAuctionToDTO = (auction: AuctionFromDB): AuctionDTO => {
-  const auctionDTO = { ...auction, id: auction.id?.toString() };
-  return auctionDTO;
-};
+// export const convertAuctionToDTO = (auction: AuctionFromDB): AuctionDTO => {
+//   const auctionDTO = {
+//     ...auction,
+//     id: auction.id?.toString(),
+//     winner: auction.winner ?? null,
+//   };
+//   return auctionDTO;
+// };
 
 export const AuctionModel = model("auction", auctionSchema);
