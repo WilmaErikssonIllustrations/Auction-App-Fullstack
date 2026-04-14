@@ -83,16 +83,16 @@ auctionRouter.patch("/:id", async (req: Request, res: Response) => {
       });
     }
 
-    const highestBid =
-      auction.bids.length > 0
-        ? Math.max(...auction.bids.map((bid) => bid.sum))
-        : auction.startingBid;
+    // const highestBid =
+    //   auction.bids.length > 0
+    //     ? Math.max(...auction.bids.map((bid) => bid.sum))
+    //     : auction.startingBid;
 
-    if (Number(sum) <= highestBid) {
-      return res.status(400).json({
-        message: `Your bid must be higher than the current highest bid of ${highestBid}.`,
-      });
-    }
+    // if (Number(sum) <= highestBid) {
+    //   return res.status(400).json({
+    //     message: `Your bid must be higher than the current highest bid of ${highestBid}.`,
+    //   });
+    // }
 
     // Försöker lägga till budet
     const response = await addBid(id, createdBy, Number(sum));
