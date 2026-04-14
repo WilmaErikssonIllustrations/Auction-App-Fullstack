@@ -1,3 +1,4 @@
+import { getDefaultResultOrder } from "node:dns";
 import { AuctionModel, type Auction } from "../models/Auction.mjs";
 import type { Bid } from "../models/Bid.mjs";
 import { addWinner } from "../utils/addWinner.js";
@@ -20,15 +21,29 @@ export const getAuctions = async () => {
   const auctions = await AuctionModel.find();
 
   auctions.forEach(async (auction) => {
-    auction.hasEnded = checkHasEnded(auction);
+    const auctionHasEnded = checkHasEnded(auction);
     const result = addWinner(auction);
-    if (auction.hasEnded && result) {
-      auction.winner = result;
+    if (auctionHasEnded && result) {
+      await AuctionModel.findOneAndUpdate(
+        { _id: auction.id },
+        { winner: result, hasEnded: true },
+        {
+          returnDocument: "after",
+        },
+      );
+    } else {
+      await AuctionModel.findOneAndUpdate(
+        { _id: auction.id },
+        { hasEnded: auctionHasEnded },
+        {
+          returnDocument: "after",
+        },
+      );
     }
-    await auction.save();
   });
+  const updatedAuctions = await AuctionModel.find();
 
-  return auctions;
+  return updatedAuctions;
 };
 
 /**
@@ -39,15 +54,31 @@ export const getAuctions = async () => {
 export const getAuctionById = async (id: string) => {
   const auction = await AuctionModel.findById(id);
   if (!auction) return false;
-  auction.hasEnded = checkHasEnded(auction);
+
+  const auctionHasEnded = checkHasEnded(auction);
   const result = addWinner(auction);
-  if (auction.hasEnded && result) {
-    auction.winner = result;
+  if (auctionHasEnded && result) {
+    // auction.winner = result;
+    await AuctionModel.findOneAndUpdate(
+      { _id: auction.id },
+      { winner: result, hasEnded: true },
+      {
+        returnDocument: "after",
+      },
+    );
+  } else {
+    await AuctionModel.findOneAndUpdate(
+      { _id: auction.id },
+      { hasEnded: auctionHasEnded },
+      {
+        returnDocument: "after",
+      },
+    );
   }
 
-  await auction.save();
+  const updatedAuction = await AuctionModel.findById(id);
 
-  return auction;
+  return updatedAuction;
 };
 
 /**
@@ -58,16 +89,11 @@ export const getAuctionById = async (id: string) => {
  * @returns false or the auction
  */
 export const addBid = async (id: string, createdBy: string, sum: number) => {
-  const auction = await AuctionModel.findById(id);
-  if (!auction) return false;
-
-  const newBid: Bid = {
-    createdBy: createdBy,
-    sum: sum,
-  };
-
-  auction.bids.push(newBid);
-  await auction.save();
-
-  return auction;
+  return await AuctionModel.findOneAndUpdate(
+    { _id: id },
+    { $push: { bids: { createdBy, sum } } },
+    {
+      returnDocument: "after",
+    },
+  );
 };

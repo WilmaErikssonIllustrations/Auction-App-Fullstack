@@ -1,6 +1,8 @@
 import { io } from "socket.io-client";
 import type { Auction } from "./models/types";
 import { displayAuctionDetails } from "../src/utils/productPageUtils";
+import { checkAuctionLeader } from "./utils/checkAuctionLeader";
+import { createOverbidMessage } from "./utils/createOverbidMessage";
 
 
 const socket = io("http://localhost:3000");
@@ -19,6 +21,17 @@ if (auctionId) {
 }
 
 socket.on("sendSingleAuction", (auction: Auction) => {
-  console.log("Real-time update: updating product page with new bid");
   displayAuctionDetails(auction);
+  const bidLeader = checkAuctionLeader(auction, userId);
+
+  if (bidLeader && userId) {
+    socket.emit("joinLeaderRoom", userId, auction._id);
+  }
 });
+
+socket.on("sendLeaderMessage", (msg: string) => {
+  console.log(msg);
+  createOverbidMessage(msg);
+});
+
+export default socket;

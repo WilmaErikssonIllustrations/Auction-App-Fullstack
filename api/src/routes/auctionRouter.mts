@@ -10,7 +10,9 @@ import { User } from "../models/User.mjs";
 
 export const auctionRouter = express.Router();
 
-
+/**
+ * Tar emot formData från användaren och skapar en ny auktion.
+ */
 auctionRouter.post("/", async (req, res) => {
   try {
     const {
@@ -53,7 +55,7 @@ auctionRouter.post("/", async (req, res) => {
 
 auctionRouter.patch("/:id", async (req: Request, res: Response) => {
   try {
-
+    // kastar 'req.params' för att TS ska veta att 'id' är en string
     const { id } = req.params as { id: string };
     const { createdBy, sum } = req.body;
 
@@ -63,15 +65,28 @@ auctionRouter.patch("/:id", async (req: Request, res: Response) => {
       return res.status(404).send("Auction not found");
     }
 
-
+    // Kontrollerar att användaren inte budar på sin egen auktion
     if (auction.createdBy.toString() === createdBy.toString()) {
       return res.status(403).json({
         message: "You cannot bid on your own auction.",
       });
     }
 
+    const highestBid =
+      auction.bids.length > 0
+        ? Math.max(...auction.bids.map((bid) => bid.sum))
+        : auction.startingBid;
 
-    const highestBid = auction.bids.length > 0 ? Math.max(...auction.bids.map((bid) => bid.sum)) : auction.startingBid;
+    if (Number(sum) <= highestBid) {
+      return res.status(400).json({
+        message: `Your bid must be higher than the current highest bid of ${highestBid}.`,
+      });
+    }
+
+    const highestBid =
+      auction.bids.length > 0
+        ? Math.max(...auction.bids.map((bid) => bid.sum))
+        : auction.startingBid;
 
     if (Number(sum) <= highestBid) {
       return res.status(400).json({
@@ -83,7 +98,8 @@ auctionRouter.patch("/:id", async (req: Request, res: Response) => {
     const response = await addBid(id, createdBy, Number(sum));
 
     if (response) {
-
+      // Uppdaterar usern som lagt budet i databasen
+      // // findByIdAndUpdate letar upp användaren via deras ID (createdBy)
       await User.findByIdAndUpdate(
         createdBy,
         {
@@ -94,7 +110,16 @@ auctionRouter.patch("/:id", async (req: Request, res: Response) => {
 
       const updatedAuction = await getAuctionById(id);
 
-      io.to(id).emit("sendSingleAuction", updatedAuction);
+      // Vi skickar ENDAST till de som joinat rummet för just detta ID
+      // io.to(id).emit("sendSingleAuction", updatedAuction);
+
+      io.emit("sendSingleAuction", updatedAuction);
+
+      // Vi skickar meddelande till bud-ledaren för auktionen
+      io.to("leader" + id).emit(
+        "sendLeaderMessage",
+        "Du har blivit överbudad i en auktion",
+      );
     } else {
       res.status(400).send("Could not update auction");
     }
