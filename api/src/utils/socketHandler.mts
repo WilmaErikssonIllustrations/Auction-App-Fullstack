@@ -26,7 +26,7 @@ export const setupSocketHandlers = (io: Server) => {
       }
     });
 
-    socket.on("sendId", async (id: string) => {
+    socket.on("readyForSingleAuction", async (id: string) => {
       const auction = await getAuctionById(id);
       socket.emit("sendSingleAuction", auction);
     });

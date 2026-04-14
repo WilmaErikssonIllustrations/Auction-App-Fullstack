@@ -3,7 +3,6 @@ import { createAuctionFeed } from "./utils/landingPageUtils";
 import type { Auction } from "./models/types";
 import { getNearestAuctionEnd } from "./utils/getNearestAuctionEnd";
 
-
 export const socket = io("http://localhost:3000");
 
 socket.emit("readyForAuctions");
@@ -18,11 +17,10 @@ socket.on("sendAuctions", (auctions: Auction[]) => {
   updateSetTimeout(timeUntilUpdate);
 });
 
-// funkar första gången men setTimeout körs inte efter det
 const updateSetTimeout = (timeUntilUpdate: number) => {
   if (timeout) clearTimeout(timeout);
 
-  timeout = setTimeout(() => {
+  timeout = window.setTimeout(() => {
     socket.emit("readyForAuctions");
   }, timeUntilUpdate);
 };

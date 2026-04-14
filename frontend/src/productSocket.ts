@@ -4,20 +4,16 @@ import { displayAuctionDetails } from "../src/utils/productPageUtils";
 import { checkAuctionLeader } from "./utils/checkAuctionLeader";
 import { createOverbidMessage } from "./utils/createOverbidMessage";
 
-
 const socket = io("http://localhost:3000");
-
 
 const auctionId = localStorage.getItem("lastClickedAuction");
 const userId = sessionStorage.getItem("userId");
-
 
 if (userId) {
   socket.emit("joinMyBiddedRooms", userId);
 }
 if (auctionId) {
-
-  socket.emit("sendId", auctionId);
+  socket.emit("readyForSingleAuction", auctionId);
 }
 
 socket.on("sendSingleAuction", (auction: Auction) => {

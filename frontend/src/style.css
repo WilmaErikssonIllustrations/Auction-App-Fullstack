@@ -37,3 +37,11 @@ button {
   padding: 5px;
   border: 2px dotted blue;
 }
+
+.endedAuction {
+  color: red;
+}
+
+.yourAuction {
+  color: green;
+}

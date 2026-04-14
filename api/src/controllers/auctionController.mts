@@ -14,8 +14,10 @@ export const createAuction = async (auction: Auction) => {
 };
 
 /**
- *
- * @returns the first 5 auctions from the database
+ * gets the auctions from the database
+ * runs them through hasEnded and addWinner filters
+ * updates the auctions in the database
+ * @returns the auctions
  */
 export const getAuctions = async () => {
   const auctions = await AuctionModel.find();
@@ -25,7 +27,7 @@ export const getAuctions = async () => {
     const result = addWinner(auction);
     if (auctionHasEnded && result) {
       await AuctionModel.findOneAndUpdate(
-        { _id: auction.id },
+        { _id: auction._id },
         { winner: result, hasEnded: true },
         {
           returnDocument: "after",
@@ -33,7 +35,7 @@ export const getAuctions = async () => {
       );
     } else {
       await AuctionModel.findOneAndUpdate(
-        { _id: auction.id },
+        { _id: auction._id },
         { hasEnded: auctionHasEnded },
         {
           returnDocument: "after",
@@ -47,7 +49,9 @@ export const getAuctions = async () => {
 };
 
 /**
- *
+ * gets the auction from the database
+ * runs it through hasEnded and addWinner filters
+ * updates the auction in the database
  * @param id id of the auction
  * @returns auction
  */
@@ -86,7 +90,7 @@ export const getAuctionById = async (id: string) => {
  * @param id id of the auction
  * @param createdBy id of the bidder
  * @param sum sum of the bid
- * @returns false or the auction
+ * @returns the auction
  */
 export const addBid = async (id: string, createdBy: string, sum: number) => {
   return await AuctionModel.findOneAndUpdate(

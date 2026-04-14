@@ -1,14 +1,13 @@
 import mongoose, { Schema, type InferSchemaType } from "mongoose";
 
 export const userSchema = new mongoose.Schema({
-  // id: { type: Schema.ObjectId },
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   auctionHasBiddedOn: {
     type: [String],
-    default: []
-  }
+    default: [],
+  },
 });
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);

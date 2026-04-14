@@ -1,9 +1,14 @@
 import type { Auction, NewAuctionFormData } from "../models/types";
 import { getUser } from "./getUser";
 
+console.log("Tid om 60 sek", Date.now() + 1000 * 60);
+console.log("Tid om 90 sek", Date.now() + 1000 * 90);
+
 const displayFormButton = document.getElementById("displayFormButton");
 const createAuctionForm = document.getElementById("createAuctionForm");
-const createAuctionButton = document.getElementById("createAuctionButton") as HTMLButtonElement;
+const createAuctionButton = document.getElementById(
+  "createAuctionButton",
+) as HTMLButtonElement;
 
 const loggedInUser = await getUser();
 
@@ -64,6 +69,7 @@ function toggleAuctionForm() {
 }
 
 export const createAuctionFeed = (auctions: Auction[]) => {
+  console.log("Auctions: ", auctions);
   const auctionContainer = document.getElementById("auctionContainer");
   if (!auctionContainer) return;
   auctionContainer.innerHTML = "";
@@ -99,6 +105,7 @@ const createAuction = async (auction: Auction) => {
 
   if (loggedInUser?.id === auction.createdBy) {
     createdBy.innerHTML = "Det här är din auktion";
+    createdBy.classList.add("yourAuction");
   } else {
     const auctionCreator = await getUser(auction.createdBy);
     if (auctionCreator) {
@@ -112,6 +119,7 @@ const createAuction = async (auction: Auction) => {
 
   if (auction.hasEnded) {
     endDate.innerHTML = "Auktionen slutfördes: " + calculatedEndDate;
+    endDate.classList.add("endedAuction");
   } else {
     endDate.innerHTML = "Auktionen slutar: " + calculatedEndDate;
   }
@@ -124,14 +132,16 @@ const createAuction = async (auction: Auction) => {
       if (a.sum > b.sum) return -1;
       return 0;
     });
+    const auctionLeader = await getUser(sortedBids[0].createdBy);
     highestBidSum.innerHTML = "Högsta bud: " + sortedBids[0].sum.toString();
     highestBidLeader.innerHTML =
       (auction.hasEnded ? "Vann" : "Leder") +
       " auktionen: " +
-      sortedBids[0].createdBy; // det här ska ändras så att det visar budgivarens användarnamn
+      auctionLeader?.name;
 
     if (loggedInUser?.id === sortedBids[0].createdBy) {
       isHighestBidLeader.innerHTML = "Du leder budgivningen";
+      isHighestBidLeader.classList.add("yourAuction");
     }
   } else {
     startingBid.innerHTML = "Utropspris: " + auction.startingBid + " kr";
