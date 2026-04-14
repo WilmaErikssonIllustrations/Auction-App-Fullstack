@@ -1,7 +1,6 @@
 import type { Auction, NewAuctionFormData } from "../models/types";
 import { getUser } from "./getUser";
 
-// Create Auction Form
 const displayFormButton = document.getElementById("displayFormButton");
 const createAuctionForm = document.getElementById("createAuctionForm");
 const createAuctionButton = document.getElementById("createAuctionButton") as HTMLButtonElement;
@@ -64,7 +63,6 @@ function toggleAuctionForm() {
   }
 }
 
-// Auction Feed
 export const createAuctionFeed = (auctions: Auction[]) => {
   const auctionContainer = document.getElementById("auctionContainer");
   if (!auctionContainer) return;

@@ -29,7 +29,6 @@ export type UserFromDB = InferSchemaType<typeof userSchema> & {
   id: string | undefined;
 };
 
-// Ändra User till UserFromDB och lägg till id när schema och model är skapat
 export const convertUserToDTO = (user: UserFromDB): UserDTO => {
   return {
     id: user.id?.toString(),

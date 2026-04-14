@@ -20,7 +20,7 @@ loginRouter.post("/", async (req, res) => {
             res.cookie("login", token, {
                 expires,
                 sameSite: "lax",
-                secure: false, //ändra till true i produktion med https
+                secure: false,
                 httpOnly: true,
             });
 

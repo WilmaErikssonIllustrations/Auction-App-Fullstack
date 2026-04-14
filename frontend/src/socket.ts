@@ -3,12 +3,12 @@ import { createAuctionFeed } from "./utils/landingPageUtils";
 import type { Auction } from "./models/types";
 import { getNearestAuctionEnd } from "./utils/getNearestAuctionEnd";
 
-// CREATE SOCKET-CLIENT SERVER
+
 export const socket = io("http://localhost:3000");
 
 socket.emit("readyForAuctions");
 
-let timeUntilUpdate: number = 1000 * 60 * 60; //uppdaterar sidan senast efter en timma
+let timeUntilUpdate: number = 1000 * 60 * 60;
 let timeout: number;
 
 socket.on("sendAuctions", (auctions: Auction[]) => {

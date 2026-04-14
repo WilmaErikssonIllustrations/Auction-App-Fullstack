@@ -25,17 +25,15 @@ app.use(
 app.use(json());
 app.use(cookieParser());
 
-// API ENDPOINTS //
 app.use("/auctions", auctionRouter);
 app.use("/api/users", userRouter);
 app.use("/login", loginRouter);
 
-// CREATE AND START SOCKET SERVER //
 export const server = createServer(app);
 
 export const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // Better than "*" for security
+    origin: "http://localhost:5173",
   },
 });
 
@@ -44,7 +42,7 @@ setupSocketHandlers(io);
 server.listen(port, async () => {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log("Mongoose connection state:", mongoose.connection.readyState); // 1 means connected
+    console.log("Mongoose connection state:", mongoose.connection.readyState);
   } catch (error) {
     console.error("Error connection to database: ", error);
   }

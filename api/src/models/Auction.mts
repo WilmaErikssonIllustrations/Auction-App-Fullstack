@@ -29,17 +29,4 @@ const auctionSchema = new Schema(
   { timestamps: true },
 );
 
-// export type AuctionFromDB = InferSchemaType<typeof auctionSchema>;
-
-// export type AuctionDTO = Auction & { id: string | undefined };
-
-// export const convertAuctionToDTO = (auction: AuctionFromDB): AuctionDTO => {
-//   const auctionDTO = {
-//     ...auction,
-//     id: auction.id?.toString(),
-//     winner: auction.winner ?? null,
-//   };
-//   return auctionDTO;
-// };
-
 export const AuctionModel = model("auction", auctionSchema);

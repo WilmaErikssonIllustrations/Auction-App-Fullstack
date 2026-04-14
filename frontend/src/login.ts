@@ -11,7 +11,6 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
   ).value;
 
   const response = await axios.post(
-    // "https://fed25s-chat-cbgzhhgncrhjesg8.swedencentral-01.azurewebsites.net/login",
     "http://localhost:3000/login",
     {
       email: userEmail,
