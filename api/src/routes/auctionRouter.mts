@@ -8,7 +8,6 @@ import {
 import { io } from "../index.mjs";
 import { User } from "../models/User.mjs";
 
-
 export const auctionRouter = express.Router();
 
 /**
@@ -61,7 +60,6 @@ auctionRouter.post("/", async (req, res) => {
  * innan bud läggs validerar att ägare inte är samma som budgivare, annars skickar error
  */
 auctionRouter.patch("/:id", async (req: Request, res: Response) => {
-
   try {
     // kastar 'req.params' för att TS ska veta att 'id' är en string
     const { id } = req.params as { id: string };
@@ -87,12 +85,16 @@ auctionRouter.patch("/:id", async (req: Request, res: Response) => {
     if (response) {
       // Uppdaterar usern som lagt budet i databasen
       // // findByIdAndUpdate letar upp användaren via deras ID (createdBy)
-      await User.findByIdAndUpdate(createdBy, {
-        // $addToSet lägger till auktionens ID i arrayen 'auctionHasBiddedOn'
-        // men ENDAST om det inte redan finns där (förhindrar dubbletter).
-        $addToSet: { auctionHasBiddedOn: id }
-      }, {});
-      res.status(201).json(response);
+      await User.findByIdAndUpdate(
+        createdBy,
+        {
+          // $addToSet lägger till auktionens ID i arrayen 'auctionHasBiddedOn'
+          // men ENDAST om det inte redan finns där (förhindrar dubbletter).
+          $addToSet: { auctionHasBiddedOn: id },
+        },
+        {},
+      );
+      // res.status(201).json(response);
       // Skicka ut uppdateringen via Socket.io
       // Vi hämtar den uppdaterade auktionen
       const updatedAuction = await getAuctionById(id);
