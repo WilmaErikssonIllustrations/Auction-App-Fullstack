@@ -4,6 +4,13 @@ import { getUser } from "./getUser";
 // Create Auction Form
 const displayFormButton = document.getElementById("displayFormButton");
 const createAuctionForm = document.getElementById("createAuctionForm");
+const createAuctionButton = document.getElementById("createAuctionButton") as HTMLButtonElement;
+
+const loggedInUser = await getUser();
+
+if (!loggedInUser) {
+  createAuctionButton.disabled = true;
+}
 
 displayFormButton?.addEventListener("click", () => {
   toggleAuctionForm();
@@ -11,7 +18,6 @@ displayFormButton?.addEventListener("click", () => {
 
 createAuctionForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const loggedInUser = await getUser();
   if (!loggedInUser) return;
 
   const titleInput = document.getElementById("title") as HTMLInputElement;
