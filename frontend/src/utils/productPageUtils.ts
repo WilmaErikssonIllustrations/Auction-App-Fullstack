@@ -1,12 +1,11 @@
 import type { Auction } from "../models/types";
+import socket from "../productSocket";
+import { getAuctionLeader } from "./getAuctionLeader";
 import { getUser } from "./getUser";
 
 const auctionContainer = document.getElementById("auctionContainer");
 
-export const displayAuctionDetails = async(auction: Auction) => {
-  console.log("inside displayAuction");
-  console.log("new auction:", auction);
-
+export const displayAuctionDetails = async (auction: Auction) => {
   if (!auctionContainer) return;
 
   auctionContainer.innerHTML = "";
@@ -16,10 +15,16 @@ export const displayAuctionDetails = async(auction: Auction) => {
   const description = document.createElement("p");
   const image = document.createElement("span");
   const highestBidSum = document.createElement("p");
+  const auctionLeader = document.createElement("p");
+
+  const auctionLeaderUser = await getAuctionLeader(auction);
 
   title.textContent = auction.title;
   description.textContent = auction.description;
   image.textContent = auction.image;
+  auctionLeader.textContent = auctionLeaderUser
+    ? "Auction leader: " + auctionLeaderUser.name
+    : "";
 
   if (auction.bids.length > 0) {
     const sortedBids = auction.bids.sort((a, b) => {
@@ -60,17 +65,21 @@ export const displayAuctionDetails = async(auction: Auction) => {
     const bidInputValue = bidInput.value;
 
     if (user) {
-      console.log("user", user);
-      await fetch("http://localhost:3000/auctions/" + auction._id, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          createdBy: user.id,
-          sum: bidInputValue,
-        }),
-      });
+      console.log("this user is making a fetch", user);
+      try {
+        await fetch("http://localhost:3000/auctions/" + auction._id, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            createdBy: user.id,
+            sum: bidInputValue,
+          }),
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
   });
 
@@ -85,6 +94,7 @@ export const displayAuctionDetails = async(auction: Auction) => {
     description,
     image,
     highestBidSum,
+    auctionLeader,
     bidForm,
     goBackButton,
   );

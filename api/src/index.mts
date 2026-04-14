@@ -13,6 +13,7 @@ import {
 import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 import { User } from "./models/User.mjs";
+import type { Auction } from "./models/Auction.mjs";
 
 config();
 const port = process.env.PORT || 3000;
@@ -63,7 +64,9 @@ io.on("connection", async (socket) => {
           socket.join(auctionId);
         });
 
-        console.log(`Socket ${socket.id} (User: ${userId}) joinade ${user.auctionHasBiddedOn.length} historiska rum.`);
+        console.log(
+          `Socket ${socket.id} (User: ${userId}) joinade ${user.auctionHasBiddedOn.length} historiska rum.`,
+        );
       }
     } catch (error) {
       console.error("Fel vid joinMyBiddedRooms:", error);
@@ -91,6 +94,31 @@ io.on("connection", async (socket) => {
       // så vi behöver inte rensa bort dem från auktionerna manuellt här. Men kom ihåg att historiken finns ju kvar i databasen så den försvinner inte!
       console.log("user disconnected");
     });
+  });
+
+  socket.on("joinLeaderRoom", async (userId: string, auctionId: string) => {
+    try {
+      if (!userId) return;
+
+      console.log(
+        "User: " +
+          userId +
+          "is joining the leader room for auction: " +
+          auctionId,
+      );
+      io.socketsLeave("leader" + auctionId);
+
+      socket.join("leader" + auctionId);
+      console.log(
+        `Socket ${socket.id} (User: ${userId}) joinade ledarrummet för auktion med id ${auctionId}.`,
+      );
+    } catch (error) {
+      console.error("Fel vid joinLeaderRoom:", error);
+    }
+  });
+
+  socket.on("test", (msg: string) => {
+    console.log(msg);
   });
 });
 

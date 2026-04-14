@@ -100,7 +100,15 @@ auctionRouter.patch("/:id", async (req: Request, res: Response) => {
       const updatedAuction = await getAuctionById(id);
 
       // Vi skickar ENDAST till de som joinat rummet för just detta ID
-      io.to(id).emit("sendSingleAuction", updatedAuction);
+      // io.to(id).emit("sendSingleAuction", updatedAuction);
+
+      io.emit("sendSingleAuction", updatedAuction);
+
+      // Vi skickar meddelande till bud-ledaren för auktionen
+      io.to("leader" + id).emit(
+        "sendLeaderMessage",
+        "Du har blivit överbudad i en auktion",
+      );
     } else {
       res.status(400).send("Could not update auction");
     }
