@@ -57,11 +57,18 @@ export const displayAuctionDetails = async(auction: Auction) => {
 
   bidForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const bidInputValue = bidInput.value;
+    const bidInputValue = Number(bidInput.value);
 
-    if (user) {
-      console.log("user", user);
-      await fetch("http://localhost:3000/auctions/" + auction._id, {
+    if (!user) return;
+
+    const highestBid = auction.bids.length > 0 ? Math.max(...auction.bids.map((bid) => bid.sum)) : auction.startingBid;
+
+    if (bidInputValue <= highestBid) {
+      alert("Ditt bud måste vara högre än det nuvarande högsta bud (${highestBid} kr).");
+      return;
+    }
+
+     const response = await fetch("http://localhost:3000/auctions/" + auction._id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +78,15 @@ export const displayAuctionDetails = async(auction: Auction) => {
           sum: bidInputValue,
         }),
       });
-    }
+
+      if (response.ok) {
+        const updatedAuction = await response.json();
+
+        displayAuctionDetails(updatedAuction);
+      } else {
+        const error = await response.json();
+        alert("Ett fel inträffade: " + error.message);
+      }      
   });
 
   const goBackButton = document.createElement("button");
