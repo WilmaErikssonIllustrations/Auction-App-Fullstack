@@ -100,6 +100,7 @@ export const displayAuctionDetails = async (auction: Auction) => {
             createdBy: loggedInUser.id,
             sum: bidInputValue,
           }),
+          credentials: "include",
         });
       } catch (error) {
         console.error(error);

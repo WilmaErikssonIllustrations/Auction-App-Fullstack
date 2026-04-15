@@ -1,9 +1,6 @@
 import type { Auction, NewAuctionFormData } from "../models/types";
 import { getUser } from "./getUser";
 
-console.log("Tid om 60 sek", Date.now() + 1000 * 60);
-console.log("Tid om 90 sek", Date.now() + 1000 * 90);
-
 const displayFormButton = document.getElementById("displayFormButton");
 const createAuctionForm = document.getElementById("createAuctionForm");
 const createAuctionButton = document.getElementById(
@@ -48,6 +45,7 @@ createAuctionForm?.addEventListener("submit", async (e) => {
     method: "POST",
     headers: { "Content-Type": "application/JSON" },
     body: JSON.stringify(newAuction),
+    credentials: "include",
   });
 
   if (response.ok) {

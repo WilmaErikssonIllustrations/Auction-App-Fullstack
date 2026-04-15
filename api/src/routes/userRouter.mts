@@ -29,7 +29,7 @@ userRouter.get("/me", async (req, res) => {
     res.status(200).json(convertUserToDTO(user));
   } catch (error) {
     console.error("Error in /me endpoint:", error);
-    res.status(401).json({ message: "Invalid or expired token" });
+    res.status(500).json({ message: "Error in /me endpoint" });
   }
 });
 
@@ -51,6 +51,7 @@ userRouter.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await createUser(name, email, hashedPassword);
+    if (!newUser) throw Error("Couldn't create user");
 
     res.status(201).json({
       message: "Användare registrerad framgångsrikt",

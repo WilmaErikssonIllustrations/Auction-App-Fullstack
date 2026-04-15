@@ -10,6 +10,7 @@ import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 import { setupSocketHandlers } from "./utils/socketHandler.mjs";
 import type { Auction } from "./models/Auction.mjs";
+import { auth } from "./middlewares/auth.mjs";
 
 config();
 const port = process.env.PORT || 3000;
@@ -26,7 +27,7 @@ app.use(
 app.use(json());
 app.use(cookieParser());
 
-app.use("/auctions", auctionRouter);
+app.use("/auctions", auth, auctionRouter);
 app.use("/api/users", userRouter);
 app.use("/login", loginRouter);
 
