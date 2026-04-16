@@ -64,7 +64,7 @@ export const displayAuctionDetails = async(auction: Auction) => {
     const highestBid = auction.bids.length > 0 ? Math.max(...auction.bids.map((bid) => bid.sum)) : auction.startingBid;
 
     if (bidInputValue <= highestBid) {
-      alert("Ditt bud måste vara högre än det nuvarande högsta bud (${highestBid} kr).");
+      alert("Ditt bud måste vara högre än det nuvarande högsta budet.");
       return;
     }
 
