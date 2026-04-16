@@ -87,7 +87,7 @@ export const displayAuctionDetails = async (auction: Auction) => {
 
   bidForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const bidInputValue = bidInput.value;
+    const bidInputValue = Number(bidInput.value);
 
     if (loggedInUser) {
       try {
