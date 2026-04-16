@@ -12,13 +12,15 @@ export const userRouter = express.Router();
 
 userRouter.get("/me", async (req, res) => {
   try {
+    const JWT_SECRET = process.env.JWT_SECRET;
+    if (!JWT_SECRET) throw Error("no JWT Secret found");
     const token = req.cookies.login;
 
     if (!token) {
       return res.status(401).json({ message: "No authentication token found" });
     }
 
-    const decoded = jwt.verify(token, "supersecretsecret") as UserDTO;
+    const decoded = jwt.verify(token, JWT_SECRET) as UserDTO;
 
     const user = await findUserByEmail(decoded.email);
 
