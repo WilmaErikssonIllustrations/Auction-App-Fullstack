@@ -45,3 +45,8 @@ button {
 .yourAuction {
   color: green;
 }
+.auctionImage {
+  width: 200px;
+  height: 150px;
+  object-fit: contain;
+}
