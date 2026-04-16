@@ -89,6 +89,11 @@ export const displayAuctionDetails = async (auction: Auction) => {
     event.preventDefault();
     const bidInputValue = Number(bidInput.value);
 
+    if (auction.hasEnded) {
+      alert("Auktionen har redan avslutats.");
+      return;
+    }
+    
     const highestBid = auction.bids.length > 0 ? Math.max(...auction.bids.map((bid) => bid.sum)) : auction.startingBid;
 
     if (bidInputValue <= highestBid) {
