@@ -1,37 +1,30 @@
 <!doctype html>
 <html lang="sv">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registrera användare</title>
-  </head>
-  <body>
-    <!-- HEADER START-->
-    <!-- HEADER END-->
-    <!-- MAIN START-->
-    <main>
-      <h1>Registrera dig</h1>
-      <form id="registerForm">
-        <label for="name">Namn:</label>
-        <input type="text" id="name" name="name" required /><br /><br />
 
-        <label for="email">E-post:</label>
-        <input type="email" id="email" name="email" required /><br /><br />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registrera användare</title>
+</head>
 
-        <label for="password">Lösenord:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          required
-        /><br /><br />
+<body>
+  <main id="registerContainer">
+    <h1>Registrera dig</h1>
+    <form id="registerForm">
+      <label for="name">Namn:</label>
+      <input type="text" id="name" name="name" required />
 
-        <button>Skicka</button>
-      </form>
-    </main>
-    <!-- MAIN END-->
-    <!-- FOOTER START-->
-    <!-- FOOTER END-->
-    <script type="module" src="./src/register.ts"></script>
-  </body>
+      <label for="email">E-post:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="password">Lösenord:</label>
+      <input type="password" id="password" name="password" required />
+
+      <button>Skicka</button>
+    </form>
+  </main>
+
+  <script type="module" src="./src/register.ts"></script>
+</body>
+
 </html>
