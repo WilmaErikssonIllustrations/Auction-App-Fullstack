@@ -1,5 +1,6 @@
 import type { Auction, NewAuctionFormData } from "../models/types";
 import { getUser, type UserInfo } from "./getUser";
+import { uploadImage } from "./uploadImage";
 
 const displayFormButton = document.getElementById("displayFormButton");
 const createAuctionForm = document.getElementById("createAuctionForm");
@@ -31,10 +32,12 @@ createAuctionForm?.addEventListener("submit", async (e) => {
   ) as HTMLInputElement;
   const daysToEnd = document.getElementById("daysToEnd") as HTMLInputElement;
 
+  const image = await uploadImage(imageInput);
+
   const newAuction: NewAuctionFormData = {
     title: titleInput.value,
     description: descriptionInput.value,
-    image: imageInput.value,
+    image: image.url,
     startingBid: +startingBidInput.value,
     bids: [],
     daysToEnd: +daysToEnd.value,
@@ -85,7 +88,7 @@ const createAuction = async (
 ) => {
   const container = document.createElement("div");
   const title = document.createElement("h4");
-  const image = document.createElement("span");
+  const image = document.createElement("img");
   const description = document.createElement("p");
   const startingBid = document.createElement("p");
   const highestBidSum = document.createElement("p");
@@ -94,10 +97,13 @@ const createAuction = async (
   const createdBy = document.createElement("p");
   const endDate = document.createElement("p");
 
+  image.src = auction.image;
+  image.alt = auction.image;
+  image.classList.add("auctionImage");
+
   container.addEventListener("click", () => {
     localStorage.setItem("lastClickedAuction", auction._id);
     window.location.href = "/productPage";
-
   });
 
   title.innerHTML = "Rubrik: " + auction.title;

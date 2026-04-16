@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
   --primary-orange: rgba(214, 109, 47, 0.875);
@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  background-image: url('./assets/backdrop-dawid-tkocz.jpg');
+  background-image: url("./assets/backdrop-dawid-tkocz.jpg");
   background-color: rgba(0, 0, 0, 0.3);
   background-blend-mode: multiply;
   background-size: cover;
@@ -24,7 +24,7 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--white);
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-weight: 300;
 }
 
@@ -38,9 +38,8 @@ body {
   padding: 0;
 }
 
-
 h1 {
-  font-family: 'Work Sans, sans-serif';
+  font-family: "Work Sans, sans-serif";
   font-weight: 800;
   font-size: clamp(3rem, 10vw, 5rem);
   letter-spacing: -0.05em;
@@ -86,7 +85,6 @@ main {
   justify-content: center;
   margin: 1rem;
   border-radius: 10px;
-
 }
 
 #left {
@@ -100,7 +98,6 @@ main {
 }
 
 #right {
-
   max-width: 800px;
   border-radius: 10px;
 }
@@ -141,7 +138,7 @@ main {
 h2 {
   margin: 0;
   padding: 1rem;
-  font-family: 'Work Sans';
+  font-family: "Work Sans";
   font-weight: 300;
   letter-spacing: 0.15rem;
   font-size: 3rem;
@@ -149,12 +146,11 @@ h2 {
 }
 
 .auction h4 {
-  font-family: 'Work Sans';
+  font-family: "Work Sans";
   font-weight: 300;
   font-size: 1.7rem;
   margin-top: 0;
   padding-top: 0.5rem;
-
 }
 
 .endedAuction {
@@ -175,7 +171,7 @@ h2 {
 }
 
 #displayFormButton {
-  font-family: 'Work Sans';
+  font-family: "Work Sans";
   background-color: var(--overlay);
   font-weight: 300;
   font-size: 3rem;
@@ -193,7 +189,7 @@ h2 {
   color: var(--white);
 }
 
-#createAuctionForm>h2 {
+#createAuctionForm > h2 {
   font-size: 1.5rem;
   margin-left: 0;
   padding-left: 0;
@@ -224,7 +220,6 @@ h2 {
   margin-bottom: 2rem;
   padding: 1.5rem;
   background-color: var(--overlay);
-
 }
 
 #loginContainer,
@@ -245,4 +240,9 @@ h2 {
   flex-direction: column;
   gap: 1rem;
   text-align: left;
+}
+.auctionImage {
+  width: 200px;
+  height: 150px;
+  object-fit: contain;
 }
