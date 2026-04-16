@@ -2,33 +2,28 @@ import { getUser } from "./getUser";
 import { logoutUser } from "./logout";
 
 export const displayGreeting = async () => {
-    const greeting = document.getElementById("greeting");
+  const greeting = document.getElementById("greeting");
+  if (!greeting) return;
 
-    const userInfo = await getUser();
+  const loggedInUser = await getUser();
 
-    if (!greeting) return;
-
-    if (userInfo) {
-
-        greeting.innerHTML = `Hej, ${userInfo.name}! Du är inloggad 
+  if (loggedInUser) {
+    greeting.innerHTML = `Hej, ${loggedInUser.name}! Du är inloggad 
         <button id="logoutBtn" class="logout-link">Logga ut</button>`;
 
+    document.getElementById("userInfo")?.classList.remove("hide");
 
-        document.getElementById("userInfo")?.classList.remove("hide");
-
-        const logoutBtn = document.getElementById("logoutBtn");
-        logoutBtn?.addEventListener("click", () => {
-            logoutUser();
-        });
-
-    } else {
-
-        greeting.innerHTML = `
+    const logoutBtn = document.getElementById("logoutBtn");
+    logoutBtn?.addEventListener("click", () => {
+      logoutUser();
+    });
+  } else {
+    greeting.innerHTML = `
             Välkommen till auktionssajten!
             <button class="auth-btn" onclick="window.location.href='login.html'">Logga in</button> 
             <button class="auth-btn" onclick="window.location.href='register.html'">Registrera dig</button>
         `;
 
-        document.getElementById("userInfo")?.classList.add("hide");
-    }
+    document.getElementById("userInfo")?.classList.add("hide");
+  }
 };

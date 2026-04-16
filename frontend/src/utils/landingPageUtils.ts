@@ -1,5 +1,5 @@
 import type { Auction, NewAuctionFormData } from "../models/types";
-import { getUser } from "./getUser";
+import { getUser, type UserInfo } from "./getUser";
 
 const displayFormButton = document.getElementById("displayFormButton");
 const createAuctionForm = document.getElementById("createAuctionForm");
@@ -66,20 +66,22 @@ function toggleAuctionForm() {
   }
 }
 
-export const createAuctionFeed = (auctions: Auction[]) => {
+export const createAuctionFeed = async (auctions: Auction[]) => {
   const auctionContainer = document.getElementById("auctionContainer");
   if (!auctionContainer) return;
   auctionContainer.innerHTML = "";
 
-  auctions.forEach(async (auction) => {
-    const auctionElement = await createAuction(auction);
-    auctionContainer.append(auctionElement);
-  });
-};
-
-const createAuction = async (auction: Auction) => {
   const loggedInUser = await getUser();
 
+  for (const auction of auctions) {
+    await createAuction(auction, loggedInUser);
+  }
+};
+
+const createAuction = async (
+  auction: Auction,
+  loggedInUser: UserInfo | null,
+) => {
   const container = document.createElement("div");
   const title = document.createElement("h4");
   const image = document.createElement("span");
@@ -144,6 +146,9 @@ const createAuction = async (auction: Auction) => {
     startingBid.innerHTML = "Utropspris: " + auction.startingBid + " kr";
   }
 
+  const auctionContainer = document.getElementById("auctionContainer");
+  if (!auctionContainer) return;
+
   container.append(
     title,
     image,
@@ -155,6 +160,8 @@ const createAuction = async (auction: Auction) => {
     endDate,
     createdBy,
   );
+
+  auctionContainer.append(container);
 
   return container;
 };
