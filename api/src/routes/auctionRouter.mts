@@ -72,6 +72,12 @@ auctionRouter.patch("/:id", async (req: Request, res: Response) => {
       });
     }
 
+    if (auction.hasEnded) {
+      return res.status(400).json({
+        message: "This auction has already ended. You cannot place a bid.",
+      });
+    }
+
     const highestBid =
       auction.bids.length > 0
         ? Math.max(...auction.bids.map((bid) => bid.sum))
