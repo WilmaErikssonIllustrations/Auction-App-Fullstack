@@ -45,7 +45,7 @@ export const getAuctions = async () => {
   });
   const updatedAuctions = await AuctionModel.find();
 
-  return updatedAuctions;
+  return updatedAuctions.sort((a, b) => a.endDate - b.endDate);
 };
 
 /**
