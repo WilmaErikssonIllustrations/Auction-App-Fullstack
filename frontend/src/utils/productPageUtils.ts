@@ -2,12 +2,12 @@ import type { Auction } from "../models/types";
 import { getAuctionLeader } from "./getAuctionLeader";
 import { getUser } from "./getUser";
 
-const auctionContainer = document.getElementById("auctionContainer");
+const auctionContainer2 = document.getElementById("auctionContainer2");
 
 export const displayAuctionDetails = async (auction: Auction) => {
-  if (!auctionContainer) return;
+  if (!auctionContainer2) return;
 
-  auctionContainer.innerHTML = "";
+  auctionContainer2.innerHTML = "";
 
   const container = document.createElement("div");
   const title = document.createElement("h4");
@@ -125,5 +125,5 @@ export const displayAuctionDetails = async (auction: Auction) => {
     bidForm,
     goBackButton,
   );
-  auctionContainer.appendChild(container);
+  auctionContainer2.appendChild(container);
 };

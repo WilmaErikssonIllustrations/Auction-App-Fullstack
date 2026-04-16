@@ -53,6 +53,7 @@ createAuctionForm?.addEventListener("submit", async (e) => {
   if (response.ok) {
     console.log("SUCCESS:", await response.json());
     createAuctionForm?.classList.toggle("hide");
+    displayFormButton!.innerText = "+";
   } else {
     console.log("ERROR", response);
   }
@@ -62,9 +63,9 @@ function toggleAuctionForm() {
   if (!displayFormButton) return;
   createAuctionForm?.classList.toggle("hide");
   if (createAuctionForm?.classList.contains("hide")) {
-    displayFormButton.innerText = "Ny auktion";
+    displayFormButton.innerText = "+";
   } else {
-    displayFormButton.innerText = "Dölj";
+    displayFormButton.innerText = "-";
   }
 }
 
@@ -93,9 +94,10 @@ const createAuction = async (auction: Auction) => {
   const createdBy = document.createElement("p");
   const endDate = document.createElement("p");
 
-  title.addEventListener("click", () => {
+  container.addEventListener("click", () => {
     localStorage.setItem("lastClickedAuction", auction._id);
     window.location.href = "/productPage";
+
   });
 
   title.innerHTML = "Rubrik: " + auction.title;

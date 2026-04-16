@@ -1,3 +1,5 @@
+import "./style.css";
+
 const registerForm = document.getElementById("registerForm") as HTMLFormElement;
 
 registerForm.addEventListener("submit", async (event) => {
