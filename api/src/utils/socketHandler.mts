@@ -7,7 +7,6 @@ import {
 
 export const setupSocketHandlers = (io: Server) => {
   io.on("connection", (socket: Socket) => {
-    console.log("user connected", socket.id);
 
     socket.on("joinMyBiddedRooms", async (userId: string) => {
       try {
@@ -17,9 +16,6 @@ export const setupSocketHandlers = (io: Server) => {
           user.auctionHasBiddedOn.forEach((auctionId: string) => {
             socket.join(auctionId);
           });
-          console.log(
-            `Socket ${socket.id} (User: ${userId}) joinade ${user.auctionHasBiddedOn.length} rum.`,
-          );
         }
       } catch (error) {
         console.error("Fel vid joinMyBiddedRooms:", error);
@@ -36,25 +32,16 @@ export const setupSocketHandlers = (io: Server) => {
     });
 
     socket.on("disconnect", () => {
-      console.log("user disconnected", socket.id);
     });
 
     socket.on("joinLeaderRoom", async (userId: string, auctionId: string) => {
       try {
         if (!userId) return;
 
-        console.log(
-          "User: " +
-            userId +
-            "is joining the leader room for auction: " +
-            auctionId,
-        );
         io.socketsLeave("leader" + auctionId);
 
         socket.join("leader" + auctionId);
-        console.log(
-          `Socket ${socket.id} (User: ${userId}) joinade ledarrummet för auktion med id ${auctionId}.`,
-        );
+
       } catch (error) {
         console.error("Fel vid joinLeaderRoom:", error);
       }

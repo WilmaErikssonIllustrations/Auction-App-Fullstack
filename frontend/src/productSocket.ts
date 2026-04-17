@@ -26,7 +26,6 @@ socket.on("sendSingleAuction", (auction: Auction) => {
 });
 
 socket.on("sendLeaderMessage", (msg: string) => {
-  console.log(msg);
   createOverbidMessage(msg);
 });
 
