@@ -15,7 +15,6 @@ export const getUser = async (id: string = "me"): Promise<UserInfo | null> => {
       return await response.json();
     }
 
-    console.log(id === "me" ? "User not logged in" : `Could not get user with id: ${id}`);
     return null;
   } catch (error) {
     console.error("Error fetching user data:", error);

@@ -52,11 +52,10 @@ createAuctionForm?.addEventListener("submit", async (e) => {
   });
 
   if (response.ok) {
-    console.log("SUCCESS:", await response.json());
     createAuctionForm?.classList.toggle("hide");
     displayFormButton!.innerText = "+";
   } else {
-    console.log("ERROR", response);
+    console.error("ERROR", response);
   }
 });
 

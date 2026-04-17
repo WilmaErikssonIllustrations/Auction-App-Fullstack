@@ -6,7 +6,6 @@ export const uploadImage = async (imageInput: HTMLInputElement) => {
     file = imageInput.files?.[0];
   }
   if (!file) {
-    console.log("no file");
     return;
   }
   const formData = new FormData();

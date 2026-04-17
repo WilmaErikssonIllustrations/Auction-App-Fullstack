@@ -11,7 +11,6 @@ let timeUntilUpdate: number = 1000 * 60 * 60;
 let timeout: number;
 
 socket.on("sendAuctions", (auctions: Auction[]) => {
-  console.log("auctions: ", auctions);
   createAuctionFeed(auctions);
   timeUntilUpdate = getNearestAuctionEnd(auctions); // after update this function returns -47
 

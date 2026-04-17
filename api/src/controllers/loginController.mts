@@ -9,9 +9,6 @@ export const loginUser = async (req: LoginRequest) => {
   );
 
   if (!foundUser) {
-    console.log(
-      "Resultat: Hittade ingen användare i databasen med den mejlen.",
-    );
     return null;
   }
 
@@ -19,10 +16,8 @@ export const loginUser = async (req: LoginRequest) => {
   const success = await bcrypt.compare(req.password, foundUser.password);
 
   if (success) {
-    console.log("Inloggning lyckades!");
     return convertUserToDTO(foundUser);
   } else {
-    console.log("Resultat: Fel lösenord.");
     return null;
   }
 };
