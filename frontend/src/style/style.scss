@@ -1,0 +1,244 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: {
+    image: url("../assets/backdrop-dawid-tkocz.jpg");
+    color: rgba(0, 0, 0, 0.3);
+    blend-mode: multiply;
+    size: cover;
+    position: center;
+    repeat: no-repeat;
+    attachment: fixed;
+  }
+
+  margin: 0;
+  min-height: 100vh;
+  color: $white;
+  font-family: "Work Sans",
+  sans-serif;
+  font-weight: 300;
+}
+
+#greeting {
+  @include centered-flex-column;
+  height: 100vh;
+  padding: 0;
+
+  &.smaller {
+    @include centered-flex-column;
+    height: 10vh;
+    padding: 0;
+    margin: 5rem;
+  }
+}
+
+#loginContainer,
+#registerContainer {
+  @include centered-flex-column;
+  height: 100vh;
+  padding: 0;
+  gap: 1rem;
+}
+
+main {
+  justify-content: center;
+  margin: 1rem;
+  border-radius: 10px;
+}
+
+.auth-buttons-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+button,
+.auth-btn {
+  color: $darker-white;
+  width: auto;
+  min-width: 140px;
+  font-size: 1rem;
+  padding: 12px 28px;
+  background-color: $dark-bg;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $primary-orange;
+    color: $dark-bg;
+  }
+}
+
+#displayFormButton {
+  font-family: "Work Sans";
+  background-color: $overlay;
+  font-weight: 300;
+  font-size: 3rem;
+  width: 100px;
+  min-width: 100px;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: $white;
+  }
+}
+
+#createAuctionForm {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: $overlay;
+  margin: 1.5rem;
+  border-radius: 12px;
+  width: 80vw;
+  max-width: 600px;
+
+  &>h2 {
+    font-size: 1.5rem;
+    margin-left: 0;
+    padding-left: 0;
+    letter-spacing: normal;
+  }
+}
+
+#loginForm,
+#registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+.auction {
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  transition: border-color 0.3s ease;
+  background-color: $overlay;
+  padding: 1.5rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  h4 {
+    font-family: "Work Sans";
+    font-weight: 300;
+    font-size: 1.7rem;
+    margin-top: 0;
+    padding-top: 0.5rem;
+  }
+}
+
+.endedAuction {
+  background-color: rgba(126, 56, 56, 0.811);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.yourAuction {
+  background-color: rgba(105, 130, 105, 0.611);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.auctionImage {
+  width: 200px;
+  height: 150px;
+  object-fit: contain;
+}
+
+h1 {
+  font-family: "Work Sans, sans-serif";
+  font-weight: 800;
+  font-size: clamp(3rem, 10vw, 5rem);
+  letter-spacing: -0.05em;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  margin: 0;
+  padding: 1rem;
+  font-family: "Work Sans";
+  font-weight: 300;
+  letter-spacing: 0.15rem;
+  font-size: 3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h3 {
+  font-style: italic;
+  font-size: 1rem;
+  font-weight: 300;
+  color: $white;
+  margin: 1em 0 0 0;
+}
+
+#left {
+  margin: 0;
+  padding: 0;
+  height: fit-content;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#right {
+  max-width: 800px;
+  border-radius: 10px;
+}
+
+#createAuctionButton {
+  width: 140px;
+  border: 1px solid $primary-orange;
+}
+
+#auctionContainer {
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+
+#auctionContainer2 {
+  border-radius: 12px;
+  background-color: $overlay;
+  width: fit-content;
+  height: fit-content;
+  padding: 1.5rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 0;
+}
+
+.hide {
+  display: none !important;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}

@@ -1,4 +1,4 @@
-import "./style.css";
+import "./style/style.css";
 
 const registerForm = document.getElementById("registerForm") as HTMLFormElement;
 

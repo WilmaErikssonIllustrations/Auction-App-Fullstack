@@ -1,0 +1,13 @@
+$primary-orange: rgba(214, 109, 47, 0.875);
+$dark-bg: #000000;
+$white: #eedfd1;
+$darker-white: #ddd3c9;
+$overlay: rgba(0, 0, 0, 0.6);
+
+:root {
+    --primary-orange: #{$primary-orange};
+    --dark-bg: #{$dark-bg};
+    --white: #{$white};
+    --darker-white: #{$darker-white};
+    --overlay: #{$overlay};
+}
