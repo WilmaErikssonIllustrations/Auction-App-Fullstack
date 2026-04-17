@@ -9,6 +9,10 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   background: {
     image: url("../assets/backdrop-dawid-tkocz.jpg");
     color: rgba(0, 0, 0, 0.3);
@@ -17,6 +21,7 @@ body {
     position: center;
     repeat: no-repeat;
     attachment: fixed;
+
   }
 
   margin: 0;
@@ -241,4 +246,12 @@ main {
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
+}
+
+#overbidMessage {
+  background-color: rgba(126, 56, 56, 0.811);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: large;
+  margin: 1rem;
 }
