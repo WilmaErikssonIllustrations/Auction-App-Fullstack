@@ -12,7 +12,7 @@ export const displayAuctionDetails = async (auction: Auction) => {
   const container = document.createElement("div");
   const title = document.createElement("h4");
   const description = document.createElement("p");
-  const image = document.createElement("span");
+  const image = document.createElement("img");
   const startingBid = document.createElement("p");
   const highestBidSum = document.createElement("p");
   const auctionLeader = document.createElement("p");
@@ -23,7 +23,8 @@ export const displayAuctionDetails = async (auction: Auction) => {
   const auctionLeaderUser = await getAuctionLeader(auction);
 
   title.innerHTML = "Rubrik: " + auction.title;
-  image.innerHTML = "Bild-url: " + auction.image;
+  image.src = auction.image;
+  image.alt = auction.image;
   description.innerHTML = "Beskrivning: " + auction.description;
   auctionLeader.textContent = auctionLeaderUser
     ? "Leder auktionen: " + auctionLeaderUser.name
@@ -89,7 +90,10 @@ export const displayAuctionDetails = async (auction: Auction) => {
     event.preventDefault();
     const bidInputValue = Number(bidInput.value);
 
-    const highestBid = auction.bids.length > 0 ? Math.max(...auction.bids.map((bid) => bid.sum)) : auction.startingBid;
+    const highestBid =
+      auction.bids.length > 0
+        ? Math.max(...auction.bids.map((bid) => bid.sum))
+        : auction.startingBid;
 
     if (bidInputValue <= highestBid) {
       alert("Ditt bud måste vara högre än det nuvarande högsta budet.");
