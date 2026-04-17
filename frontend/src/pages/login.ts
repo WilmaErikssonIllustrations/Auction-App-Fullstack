@@ -1,5 +1,5 @@
 import axios from "axios";
-import "./style/style.css";
+import "../style/style.css";
 
 document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -26,7 +26,9 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
     if (response.data.id) {
       sessionStorage.setItem("userId", response.data.id);
     } else {
-      console.error("Inget ID hittades i svaret från servern. Kontrollera din backend!");
+      console.error(
+        "Inget ID hittades i svaret från servern. Kontrollera din backend!",
+      );
     }
     location.href = "/";
   }

@@ -1,25 +1,23 @@
 <!doctype html>
 <html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logga In</title>
+    <link rel="stylesheet" href="/src/style/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Logga In</title>
-  <link rel="stylesheet" href="/src/style/style.css">
-</head>
-
-<body>
-  <main id="loginContainer">
-    <h1 id="loginTitle">Logga in</h1>
-    <form id="loginForm">
-      <label for="email">E-mail:</label>
-      <input type="email" id="userEmail" name="email" required />
-      <label for="password">Lösenord:</label>
-      <input type="password" id="userPassword" name="password" required />
-      <button type="submit">Logga In</button>
-    </form>
-  </main>
-  <script type="module" src="/src/login.ts"></script>
-</body>
-
+  <body>
+    <main id="loginContainer">
+      <h1 id="loginTitle">Logga in</h1>
+      <form id="loginForm">
+        <label for="email">E-mail:</label>
+        <input type="email" id="userEmail" name="email" required />
+        <label for="password">Lösenord:</label>
+        <input type="password" id="userPassword" name="password" required />
+        <button type="submit">Logga In</button>
+      </form>
+    </main>
+    <script type="module" src="/src/pages/login.ts"></script>
+  </body>
 </html>

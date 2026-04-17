@@ -1,2 +1,0 @@
-import "./productSocket";
-import "./header";

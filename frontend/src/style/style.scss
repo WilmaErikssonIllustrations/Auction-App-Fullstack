@@ -1,5 +1,5 @@
-@use 'variables' as *;
-@use 'mixins' as *;
+@use "variables" as *;
+@use "mixins" as *;
 
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
@@ -21,14 +21,12 @@ body {
     position: center;
     repeat: no-repeat;
     attachment: fixed;
-
   }
 
   margin: 0;
   min-height: 100vh;
   color: $white;
-  font-family: "Work Sans",
-  sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-weight: 300;
 }
 
@@ -114,7 +112,7 @@ button,
   width: 80vw;
   max-width: 600px;
 
-  &>h2 {
+  & > h2 {
     font-size: 1.5rem;
     margin-left: 0;
     padding-left: 0;
@@ -168,7 +166,7 @@ button,
 }
 
 .auctionImage {
-  width: 200px;
+  width: 250px;
   height: 150px;
   object-fit: contain;
 }
@@ -246,6 +244,12 @@ main {
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
+}
+
+.auctionProductImage {
+  width: fit-content;
+  max-width: 450px;
+  height: 300px;
 }
 
 #overbidMessage {

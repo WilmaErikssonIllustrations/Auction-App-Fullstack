@@ -1,6 +1,6 @@
-import type { Auction } from "../models/types";
-import { getAuctionLeader } from "./getAuctionLeader";
-import { getUser } from "./getUser";
+import type { Auction } from "../../models/types";
+import { getAuctionLeader } from "../getAuctionLeader";
+import { getUser } from "../getUser";
 
 const auctionContainer2 = document.getElementById("auctionContainer2");
 
@@ -25,6 +25,7 @@ export const displayAuctionDetails = async (auction: Auction) => {
   title.innerHTML = "Rubrik: " + auction.title;
   image.src = auction.image;
   image.alt = auction.image;
+  image.classList.add("auctionProductImage");
   description.innerHTML = "Beskrivning: " + auction.description;
   auctionLeader.textContent = auctionLeaderUser
     ? "Leder auktionen: " + auctionLeaderUser.name

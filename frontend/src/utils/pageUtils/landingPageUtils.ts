@@ -1,5 +1,5 @@
-import type { Auction, NewAuctionFormData } from "../models/types";
-import { getUser, type UserInfo } from "./getUser";
+import type { Auction, NewAuctionFormData } from "../../models/types";
+import { getUser, type UserInfo } from "../getUser";
 import { uploadImage } from "./uploadImage";
 
 const displayFormButton = document.getElementById("displayFormButton");

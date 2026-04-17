@@ -1,8 +1,8 @@
 import { io } from "socket.io-client";
-import type { Auction } from "./models/types";
-import { displayAuctionDetails } from "../src/utils/productPageUtils";
-import { checkAuctionLeader } from "./utils/checkAuctionLeader";
-import { createOverbidMessage } from "./utils/createOverbidMessage";
+import type { Auction } from "../models/types";
+import { displayAuctionDetails } from "../utils/pageUtils/productPageUtils";
+import { checkAuctionLeader } from "../utils/checkAuctionLeader";
+import { createOverbidMessage } from "../utils/createOverbidMessage";
 
 const socket = io("http://localhost:3000");
 

@@ -1,20 +1,18 @@
 <!doctype html>
 <html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auktionssida</title>
+    <link rel="stylesheet" href="src/style/style.scss" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Auktionssida</title>
-  <link rel="stylesheet" href="src/style/style.css">
-</head>
+  <body>
+    <header id="greeting"></header>
+    <div id="userInfo" class="hide"></div>
+    <div id="overbidMessage" class="hide"></div>
+    <main id="auctionContainer2"></main>
 
-<body>
-  <header id="greeting"></header>
-  <div id="userInfo" class="hide"></div>
-  <div id="overbidMessage" class="hide"></div>
-  <main id="auctionContainer2"></main>
-
-  <script type="module" src="./src/productPage.ts"></script>
-</body>
-
+    <script type="module" src="./src/pages/productPage.ts"></script>
+  </body>
 </html>

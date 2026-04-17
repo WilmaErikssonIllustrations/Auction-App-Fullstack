@@ -172,7 +172,7 @@ button:hover,
 }
 
 .auctionImage {
-  width: 200px;
+  width: 250px;
   height: 150px;
   object-fit: contain;
 }
@@ -250,6 +250,12 @@ main {
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
+}
+
+.auctionProductImage {
+  width: fit-content;
+  max-width: 450px;
+  height: 300px;
 }
 
 #overbidMessage {
