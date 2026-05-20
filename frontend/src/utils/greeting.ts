@@ -32,8 +32,8 @@ export const displayGreeting = async () => {
 
         const buttonsHtml = `
             <div class="auth-buttons-container">
-                <button class="auth-btn" onclick="window.location.href='login.html'">Logga in</button> 
-                <button class="auth-btn" onclick="window.location.href='register.html'">Bli medlem</button>
+                <button class="auth-btn" onclick="window.location.href='/login.html'">Logga in</button> 
+                <button class="auth-btn" onclick="window.location.href='/register.html'">Bli medlem</button>
             </div>
         `;
 
