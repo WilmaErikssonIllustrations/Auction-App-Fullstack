@@ -3,7 +3,7 @@ import { createAuctionFeed } from "../utils/pageUtils/landingPageUtils";
 import type { Auction } from "../models/types";
 import { getNearestAuctionEnd } from "../utils/getNearestAuctionEnd";
 
-export const socket = io("http://localhost:3000");
+export const socket = io("https://auction-app-fullstack.onrender.com");
 
 socket.emit("readyForAuctions");
 

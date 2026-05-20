@@ -6,7 +6,7 @@ export interface UserInfo {
 
 export const getUser = async (id: string = "me"): Promise<UserInfo | null> => {
   try {
-    const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+    const response = await fetch(`https://auction-app-fullstack.onrender.com/api/users/${id}`, {
       method: "GET",
       credentials: "include",
     });

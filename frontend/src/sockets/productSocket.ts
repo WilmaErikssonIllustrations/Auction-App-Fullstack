@@ -4,7 +4,7 @@ import { displayAuctionDetails } from "../utils/pageUtils/productPageUtils";
 import { checkAuctionLeader } from "../utils/checkAuctionLeader";
 import { createOverbidMessage } from "../utils/createOverbidMessage";
 
-const socket = io("http://localhost:3000");
+const socket = io("https://auction-app-fullstack.onrender.com");
 
 const auctionId = localStorage.getItem("lastClickedAuction");
 const userId = sessionStorage.getItem("userId");

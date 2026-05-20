@@ -112,7 +112,7 @@ export const displayAuctionDetails = async (auction: Auction) => {
 
     if (loggedInUser) {
       try {
-        await fetch("http://localhost:3000/auctions/" + auction._id, {
+        await fetch("https://auction-app-fullstack.onrender.com/auctions/" + auction._id, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

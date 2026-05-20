@@ -44,7 +44,7 @@ createAuctionForm?.addEventListener("submit", async (e) => {
     createdBy: loggedInUser.id,
   };
 
-  const response = await fetch("http://localhost:3000/auctions", {
+  const response = await fetch("https://auction-app-fullstack.onrender.com/auctions", {
     method: "POST",
     headers: { "Content-Type": "application/JSON" },
     body: JSON.stringify(newAuction),

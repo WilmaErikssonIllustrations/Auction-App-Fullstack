@@ -3,7 +3,7 @@ import axios from "axios";
 export const logoutUser = async (): Promise<void> => {
   try {
     await axios.post(
-      "http://localhost:3000/login/logout",
+      "https://auction-app-fullstack.onrender.com/login/logout",
       {},
       { withCredentials: true },
     );

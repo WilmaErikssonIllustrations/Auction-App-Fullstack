@@ -20,7 +20,7 @@ if (!MONGO_URI) throw new Error("No connection string found");
 export const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://auction-app-fullstack.netlify.app/"], 
+    origin: ["http://localhost:5173", "https://auction-app-fullstack.netlify.app"], 
     credentials: true,
   }),
 );
@@ -35,7 +35,7 @@ export const server = createServer(app);
 
 export const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "https://auction-app-fullstack.netlify.app/"], // <-- BYT UT till din riktiga Netlify-länk här
+    origin: ["http://localhost:5173", "https://auction-app-fullstack.netlify.app"], // <-- BYT UT till din riktiga Netlify-länk här
     methods: ["GET", "POST"],
     credentials: true,
   },
