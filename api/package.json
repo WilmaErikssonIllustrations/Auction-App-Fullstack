@@ -8,7 +8,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx tsx watch src/index.mts"
+    "dev": "npx tsx watch src/index.mts",
+    "build": "echo 'No build step needed for tsx'", 
+    "start": "npx tsx src/index.mts"
   },
   "dependencies": {
     "@auth/express": "^0.12.1",
