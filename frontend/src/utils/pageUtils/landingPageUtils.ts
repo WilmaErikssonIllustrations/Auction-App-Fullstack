@@ -102,7 +102,7 @@ const createAuction = async (
 
   container.addEventListener("click", () => {
     localStorage.setItem("lastClickedAuction", auction._id);
-    window.location.href = "/productPage";
+    window.location.href = "/productPage.html";
   });
 
   title.innerHTML = "Rubrik: " + auction.title;
