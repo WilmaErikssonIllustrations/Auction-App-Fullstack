@@ -2,6 +2,8 @@ import type { Auction, NewAuctionFormData } from "../../models/types";
 import { getUser, type UserInfo } from "../getUser";
 import { uploadImage } from "./uploadImage";
 
+const normalizeImageUrl = (url: string) => url.replace(/^http:\/\//i, "https://");
+
 const displayFormButton = document.getElementById("displayFormButton");
 const createAuctionForm = document.getElementById("createAuctionForm");
 const createAuctionButton = document.getElementById(
@@ -96,7 +98,7 @@ const createAuction = async (
   const createdBy = document.createElement("p");
   const endDate = document.createElement("p");
 
-  image.src = auction.image;
+  image.src = normalizeImageUrl(auction.image);
   image.alt = auction.image;
   image.classList.add("auctionImage");
 

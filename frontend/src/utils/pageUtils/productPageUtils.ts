@@ -2,6 +2,8 @@ import type { Auction } from "../../models/types";
 import { getAuctionLeader } from "../getAuctionLeader";
 import { getUser } from "../getUser";
 
+const normalizeImageUrl = (url: string) => url.replace(/^http:\/\//i, "https://");
+
 const auctionContainer2 = document.getElementById("auctionContainer2");
 
 export const displayAuctionDetails = async (auction: Auction) => {
@@ -23,7 +25,7 @@ export const displayAuctionDetails = async (auction: Auction) => {
   const auctionLeaderUser = await getAuctionLeader(auction);
 
   title.innerHTML = "Rubrik: " + auction.title;
-  image.src = auction.image;
+  image.src = normalizeImageUrl(auction.image);
   image.alt = auction.image;
   image.classList.add("auctionProductImage");
   description.innerHTML = "Beskrivning: " + auction.description;

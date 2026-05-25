@@ -37,6 +37,11 @@ loginRouter.post("/", async (req, res) => {
 });
 
 loginRouter.post("/logout", (req, res) => {
-  res.clearCookie("login");
+  res.clearCookie("login", {
+    sameSite: "none",
+    secure: true,
+    httpOnly: true,
+    path: "/",
+  });
   res.status(200).send("Utloggad");
 });

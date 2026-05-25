@@ -12,5 +12,5 @@ export const logoutUser = async (): Promise<void> => {
   }
 
   sessionStorage.clear();
-  window.location.href = "index.html";
+  window.location.href = "/index.html";
 };
